@@ -7,7 +7,7 @@ public class Werewolf : NPC
 	{
 		base.Start();
 
-		maxSpeed = 0.7f;
+		maxSpeed = 0.6f;
 	}
 
 	protected override void Update()
@@ -37,6 +37,14 @@ public class Werewolf : NPC
 		{
 			behavior = Behavior.WANDER;
 			behaviorData = Vector3.zero;
+		}
+
+		Vector3 mayorPos = GameManager.Instance.mayor.Position;
+
+		if (Vector3.Distance(mayorPos, Position) < 35)
+		{
+			behavior = Behavior.FLEE;
+			behaviorData = mayorPos;
 		}
 
 		velocity += Steering.Execute(this, behavior, behaviorData);

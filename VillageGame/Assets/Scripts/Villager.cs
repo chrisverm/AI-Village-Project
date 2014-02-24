@@ -6,7 +6,7 @@ public class Villager : NPC
 	protected override void Start()
 	{
 		base.Start();
-		maxSpeed = 0.5f;
+		maxSpeed = 0.4f;
 	}
 
 	protected override void Update()
@@ -19,7 +19,7 @@ public class Villager : NPC
 			behavior = Behavior.SEEK;
 			behaviorData = cartPos;
 		}
-		else if (Vector3.Distance(Position, mayorPos) < 20)
+		else if (Vector3.Distance(Position, mayorPos) < 30)
 		{
 			behavior = Behavior.SEEK_ARRIVAL;
 			behaviorData = mayorPos;
