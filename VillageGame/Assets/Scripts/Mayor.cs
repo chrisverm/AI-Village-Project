@@ -17,8 +17,6 @@ public class Mayor : Character
 	
 	protected override void Update()
 	{
-		base.Update();
-		
 		rotation += Input.GetAxis("Mouse X") * Time.deltaTime * rotSensitivity;
 		Quaternion curRot = Quaternion.Euler(0.0f, rotation, 0.0f);
 		transform.rotation = curRot;
@@ -26,5 +24,7 @@ public class Mayor : Character
 		velocity += transform.forward * (Input.GetAxis("Vertical") * MaxSpeed);
 		velocity += transform.right * (Input.GetAxis("Horizontal") * MaxSpeed);
 		velocity *= friction;
+
+		base.Update();
 	}
 }

@@ -3,17 +3,19 @@ using System.Collections;
 
 public class Werewolf : NPC
 {
+	public Path path;
+	private Vector3 node;
+
 	protected override void Start()
 	{
 		base.Start();
 
+		node = path.ClosestNode(Position);
 		maxSpeed = 0.6f;
 	}
 
 	protected override void Update()
 	{
-		base.Update();
-
 		Villager closest = null;
 		float dist = float.MaxValue;
 		float curDist;
@@ -47,6 +49,11 @@ public class Werewolf : NPC
 			behaviorData = mayorPos;
 		}
 
+		if (Vector3.Distance(Position, node) < 10)
+		    node = path.GetNextNode(node);
+
 		velocity += Steering.Execute(this, behavior, behaviorData);
+
+		base.Update();
 	}
 }

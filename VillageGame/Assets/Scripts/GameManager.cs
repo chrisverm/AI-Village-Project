@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
 	public Transform villagerSpawnLocationsObject;
 	public Transform werewolfSpawnLocationsObject;
 
+	public List<GameObject> pathObjects;
+	private List<Path> paths;
+
 	public List<Transform> villagerSpawnLocations;
 	public List<Transform> werewolfSpawnLocations;
 	public List<Werewolf> Werewolves { get { return werewolves; } }
@@ -37,8 +40,12 @@ public class GameManager : MonoBehaviour
 		werewolves = new List<Werewolf>();
 		villagers = new List<Villager>();
 		obstacles = new List<Entity>();
+		paths = new List<Path>();
 		villagerSpawnLocations = new List<Transform>();
 		werewolfSpawnLocations = new List<Transform>();
+
+		foreach (GameObject path in pathObjects) 
+		{ paths.Add(new Path(path.transform)); }
 
 		for (int i = 0; i < villagerSpawnLocationsObject.childCount ; i++) 
 		{ villagerSpawnLocations.Add(villagerSpawnLocationsObject.transform.GetChild(i)); }
@@ -58,6 +65,8 @@ public class GameManager : MonoBehaviour
 			Werewolf werewolf = ((GameObject)Instantiate(werewolfPrefab)).GetComponent<Werewolf>();
 			werewolves.Add(werewolf);
 			werewolf.transform.position = werewolfSpawnLocations[i].position;
+
+			werewolf.path = paths[i];
 		}
 	}
 
