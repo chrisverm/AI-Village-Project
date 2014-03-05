@@ -71,10 +71,10 @@ public class Villager : NPC
 			}
 		}
 
-		if (Vector3.Distance(Position, cartPos) < 10)
-		{
-			Respawn();
-			GameManager.Instance.SaveVillager();
+		if (Vector3.Distance(Position, cartPos) < 30)
+        {
+            behavior = Behavior.SEEK;
+            behaviorData = cartPos;
 		}
 
 		base.Update();
@@ -84,7 +84,8 @@ public class Villager : NPC
 	{
 		if (c.gameObject == GameManager.Instance.cart.gameObject)
 		{
-			Respawn();
+            Respawn();
+            GameManager.Instance.SaveVillager();
 		}
 	}
 
