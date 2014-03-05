@@ -32,7 +32,7 @@ public class UI : MonoBehaviour
         winBar.pixelInset = temp;
 
         temp = winNub.pixelInset;
-        temp.x = (savedVillagers / progressWin) * 80;
+        temp.x = 50+(savedVillagers / progressWin) * 80;
         winNub.pixelInset = temp;
 
         temp = loseBar.pixelInset;
@@ -40,7 +40,7 @@ public class UI : MonoBehaviour
         loseBar.pixelInset = temp;
 
         temp = loseNub.pixelInset;
-        temp.x = (deadVillagers / progressLose) * 80 - 1;
+        temp.x = 50+(deadVillagers / progressLose) * 80 - 1;
         loseNub.pixelInset = temp;
     }
 }
