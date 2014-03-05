@@ -7,6 +7,9 @@ public class Villager : NPC
 	{
 		base.Start();
 		maxSpeed = 0.4f;
+		maxForce = 0.035f;
+
+		node = path.ClosestNode(Position);
 	}
 
 	protected override void Update()
@@ -45,6 +48,7 @@ public class Villager : NPC
 				if (collider.bounds.Intersects(closest.collider.bounds))
 				{
 					Respawn();
+					GameManager.Instance.KillVillager();
 				}
 				else
 				{
@@ -54,16 +58,23 @@ public class Villager : NPC
 			}
 			else
 			{
-				behavior = Behavior.WANDER;
-				behaviorData = mayorPos;
+				if (Vector3.Distance(Position, GameManager.Instance.house.Position) < 125)
+				{
+					behavior = Behavior.FOLLOW_PATH;
+					behaviorData = path;
+				}
+				else
+				{
+					behavior = Behavior.WANDER;
+					behaviorData = Vector3.zero;
+				}
 			}
 		}
 
-		velocity += Steering.Execute(this, behavior, behaviorData);
-
 		if (Vector3.Distance(Position, cartPos) < 10)
 		{
-			Destroy(gameObject);
+			Respawn();
+			GameManager.Instance.SaveVillager();
 		}
 
 		base.Update();

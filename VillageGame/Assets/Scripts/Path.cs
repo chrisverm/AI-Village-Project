@@ -4,40 +4,50 @@ using System.Collections.Generic;
 
 public class Path
 {
-	private List<Transform> nodes;
+	private float pathWidth;
+	private float nodeBoundary;
+
+	public static GameObject debug;
+	private List<Vector3> nodes;
+
+	public float PathWidth { get { return pathWidth; } }
+	public float NodeBoundary { get { return nodeBoundary; } }
+	
+	public Vector3 this[int index]
+	{
+		get { return nodes[index % nodes.Count]; }
+		set { nodes[index % nodes.Count] = value; }
+	}
 	
 	// Use this for initialization
 	public Path(Transform parent)
 	{
-		nodes = new List<Transform>();
+		pathWidth = 10;
+		nodeBoundary = 1;
+		nodes = new List<Vector3>();
 		
 		for (int i = 0; i < parent.childCount; i++) 
 		{
-			nodes.Add(parent.GetChild(i));
+			nodes.Add(parent.GetChild(i).position);
 		}
 	}
 	
-	public Vector3 ClosestNode(Vector3 currentPosition)
+	public int ClosestNode(Vector3 currentPosition)
 	{
-		Vector3 closest = Vector3.zero;;
 		float closestDist = float.MaxValue;
-		
-		foreach(Transform node in nodes) 
+		int closestNode = 0;
+
+		for (int node = 0; node < nodes.Count; node++) 
 		{
-			float dist = Vector3.Distance(node.position, currentPosition);
-			if (dist < closestDist )
+			float dist = Vector3.Distance(this[node], currentPosition);
+
+			if (dist < closestDist)
 			{
-				closest = node.position;
+				closestNode = node;
 				closestDist = dist;
 			}
 		}
-		return closest;
-	}
 
-	public Vector3 GetNextNode(Vector3 currentNode)
-	{
-		int index = nodes.FindIndex((e)=> { return e.position == currentNode; } );
-		Vector3 node = nodes[(index + 1) % nodes.Count].position;
-		return node;
+		return closestNode;
 	}
 }

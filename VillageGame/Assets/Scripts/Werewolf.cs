@@ -3,15 +3,13 @@ using System.Collections;
 
 public class Werewolf : NPC
 {
-	public Path path;
-	private Vector3 node;
-
 	protected override void Start()
 	{
 		base.Start();
 
 		node = path.ClosestNode(Position);
 		maxSpeed = 0.6f;
+		maxForce = 0.035f;
 	}
 
 	protected override void Update()
@@ -37,8 +35,9 @@ public class Werewolf : NPC
 		}
 		else
 		{
-			behavior = Behavior.WANDER;
-			behaviorData = Vector3.zero;
+			// For now, always follow path instead of wander.
+			behavior = Behavior.FOLLOW_PATH;
+			behaviorData = path;
 		}
 
 		Vector3 mayorPos = GameManager.Instance.mayor.Position;
@@ -48,11 +47,6 @@ public class Werewolf : NPC
 			behavior = Behavior.FLEE;
 			behaviorData = mayorPos;
 		}
-
-		if (Vector3.Distance(Position, node) < 10)
-		    node = path.GetNextNode(node);
-
-		velocity += Steering.Execute(this, behavior, behaviorData);
 
 		base.Update();
 	}
