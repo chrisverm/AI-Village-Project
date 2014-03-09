@@ -18,12 +18,16 @@ public class Path
 		get { return nodes[index % nodes.Count]; }
 		set { nodes[index % nodes.Count] = value; }
 	}
-	
-	// Use this for initialization
-	public Path(Transform parent)
+
+
+	private Path()
 	{
 		pathWidth = 10;
 		nodeBoundary = 1;
+	}
+	// Use this for initialization
+	public Path(Transform parent) : this()
+	{
 		nodes = new List<Vector3>();
 		
 		for (int i = 0; i < parent.childCount; i++) 
@@ -31,6 +35,13 @@ public class Path
 			nodes.Add(parent.GetChild(i).position);
 		}
 	}
+
+	public Path(List<Vector3> path) : this()
+	{
+		nodes = path;
+	}
+
+	public Path(Vector3[] path) : this(path.ToList<Vector3>()) {}
 	
 	public int ClosestNode(Vector3 currentPosition)
 	{

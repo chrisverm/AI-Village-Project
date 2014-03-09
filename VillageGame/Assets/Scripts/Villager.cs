@@ -3,11 +3,14 @@ using System.Collections;
 
 public class Villager : NPC
 {
+	public bool goingToCart;
+
 	protected override void Start()
 	{
 		base.Start();
 		maxSpeed = 0.4f;
 		maxForce = 0.035f;
+		goingToCart = false;
 
 		node = path.ClosestNode(Position);
 	}
@@ -45,6 +48,7 @@ public class Villager : NPC
 
 			if (closest != null)
 			{
+				goingToCart = false;
 				if (collider.bounds.Intersects(closest.collider.bounds))
 				{
 					Respawn();
@@ -65,8 +69,27 @@ public class Villager : NPC
 				}
 				else
 				{
-					behavior = Behavior.WANDER;
-					behaviorData = Vector3.zero;
+					if (goingToCart)
+					{
+						behavior = Behavior.FOLLOW_PATH;
+						behaviorData = path;
+					}
+					else if (Random.Range(0.0f, 1.0f) > 0.99f)
+					{
+						NavMeshPath p = new NavMeshPath();
+						NavMesh.CalculatePath(Position, cartPos, -1, p);
+						path = new Path(p.corners);
+						node = 1; // Zero causes errors.
+						goingToCart = true;
+
+						behavior = Behavior.FOLLOW_PATH;
+						behaviorData = path;
+					}
+					else
+					{
+						behavior = Behavior.WANDER;
+						behaviorData = Vector3.zero;
+					}
 				}
 			}
 		}
