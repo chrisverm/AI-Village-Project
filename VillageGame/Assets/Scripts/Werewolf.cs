@@ -10,10 +10,18 @@ public class Werewolf : NPC
 		node = path.ClosestNode(Position);
 		maxSpeed = 0.6f;
 		maxForce = 0.035f;
+
+		rational = true;
+		decisionTree = new DecisionTree("Assets/Resources/WerewolfDecisionTree.txt");
 	}
 
 	protected override void Update()
 	{
+		closestEnemy = GetClosestVillager();
+
+		base.Update();
+
+		/*
 		Villager closest = null;
 		float dist = float.MaxValue;
 		float curDist;
@@ -49,5 +57,11 @@ public class Werewolf : NPC
 		}
 
 		base.Update();
+		*/
+	}
+
+	protected override void Respawn()
+	{
+		Debug.Log("KILLING WEREWOLF");
 	}
 }

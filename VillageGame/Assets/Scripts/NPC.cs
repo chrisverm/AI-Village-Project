@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
 
 public class NPC : Character 
 {
+	protected bool rational;
 	protected Behavior behavior;
 	protected object behaviorData;
+	protected DecisionTree decisionTree;
+
+	protected NPC closestEnemy;
 
 	public Path path;
 	public int node;
@@ -20,8 +25,83 @@ public class NPC : Character
 	// Update is called once per frame
 	protected override void Update() 
     {
+		if (rational)
+			Decide();
+
 		velocity += Vector3.ClampMagnitude(Steering.Execute(this, behavior, behaviorData), maxForce);
 
         base.Update();
+	}
+
+	protected virtual void Respawn()
+	{
+
+	}
+
+	private void Decide()
+	{
+		Node n = Decisioner.Decide(this, decisionTree);
+		
+		behavior = (Behavior)Enum.Parse(typeof(Behavior), n.Func.ToUpper());
+		
+		switch(n.Args)
+		{
+		case "Cart":
+			behaviorData = GameManager.Instance.cart.Position;
+			break;
+		case "Mayor":
+			behaviorData = GameManager.Instance.mayor.Position;
+			break;
+		case "Werewolf":
+			behaviorData = closestEnemy.Position;
+			break;
+		case "Villager":
+			behaviorData = closestEnemy.Position;
+			break;
+		case "Path":
+			behaviorData = path;
+			break;
+		case "None":
+			behaviorData = Vector3.zero;
+			break;
+		}
+	}
+	
+	protected Werewolf GetClosestWerewolf()
+	{
+		Werewolf closest = null;
+		float dist = float.MaxValue;
+		float curDist = 0;
+		
+		foreach (Werewolf werewolf in GameManager.Instance.Werewolves) 
+		{
+			curDist = Vector3.Distance(this.Position, werewolf.Position);
+			if (curDist < dist)
+			{
+				closest = werewolf;
+				dist = curDist;
+			}
+		}
+		
+		return closest;
+	}
+	
+	protected Villager GetClosestVillager()
+	{
+		Villager closest = null;
+		float dist = float.MaxValue;
+		float curDist = 0;
+		
+		foreach (Villager villager in GameManager.Instance.Villagers) 
+		{
+			curDist = Vector3.Distance(this.Position, villager.Position);
+			if (curDist < dist)
+			{
+				closest = villager;
+				dist = curDist;
+			}
+		}
+		
+		return closest;
 	}
 }

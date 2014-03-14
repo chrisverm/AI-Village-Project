@@ -3,20 +3,49 @@ using System.Collections;
 
 public class Villager : NPC
 {
-	public bool goingToCart;
-
 	protected override void Start()
 	{
 		base.Start();
 		maxSpeed = 0.4f;
 		maxForce = 0.035f;
-		goingToCart = false;
 
 		node = path.ClosestNode(Position);
+
+		rational = true;
+		decisionTree = new DecisionTree("Assets/Resources/VillagerDecisionTree.txt");
 	}
 
 	protected override void Update()
 	{
+		closestEnemy = GetClosestWerewolf();
+
+		base.Update();
+
+		if (rational && Random.Range(0.0f, 1.0f) > 0.99f)
+		{
+			rational = false;
+
+			NavMeshPath p = new NavMeshPath();
+			NavMesh.CalculatePath(Position, GameManager.Instance.cart.Position, -1, p);
+			path = new Path(p.corners);
+			node = 1;
+
+			behavior = Behavior.FOLLOW_PATH;
+			behaviorData = path;
+		}
+
+		if (collider.bounds.Intersects(closestEnemy.collider.bounds))
+		{
+			Respawn();
+		}
+
+		if (Vector3.Distance(Position, GameManager.Instance.cart.Position) < 10)
+		{
+			Respawn();
+			GameManager.Instance.SaveVillager();
+		}
+
+		/*
 		Vector3 mayorPos = GameManager.Instance.mayor.Position;
 		Vector3 cartPos = GameManager.Instance.cart.Position;
 		
@@ -99,8 +128,7 @@ public class Villager : NPC
             behavior = Behavior.SEEK;
             behaviorData = cartPos;
 		}
-
-		base.Update();
+		*/
 	}
 
 	void OnTriggerEnter(Collider c)
@@ -112,10 +140,12 @@ public class Villager : NPC
 		}
 	}
 
-	void Respawn()
+	protected override void Respawn()
 	{
+		Debug.Log("KILLING VILLAGER");
 		// ew.
 		Position = GameManager.Instance.villagerSpawnLocations[Random.Range(0,5)].position;
+		GameManager.Instance.KillVillager();
 	}
 
 }
