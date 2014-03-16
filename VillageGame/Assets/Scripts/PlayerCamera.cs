@@ -4,7 +4,6 @@ using System.Collections;
 public class PlayerCamera : MonoBehaviour
 {
 	public Camera cam;
-	public GameObject moon;
 	private float distFromTarget;
 	private float height;
 	private Vector2 rotAngles;
@@ -21,8 +20,6 @@ public class PlayerCamera : MonoBehaviour
 		rotAngles = new Vector2(0, -30 * Mathf.Deg2Rad);
 
 		cam.backgroundColor = Color.black;
-		moon.renderer.material.color += Color.red * (0.7f);
-		
 	}
 	
 	void LateUpdate()
