@@ -19,13 +19,12 @@ public class Path
 		set { nodes[index % nodes.Count] = value; }
 	}
 
-
 	private Path()
 	{
 		pathWidth = 10;
 		nodeBoundary = 1;
 	}
-	// Use this for initialization
+	
 	public Path(Transform parent) : this()
 	{
 		nodes = new List<Vector3>();
@@ -34,11 +33,23 @@ public class Path
 		{
 			nodes.Add(parent.GetChild(i).position);
 		}
+
+		if (nodes.Count <= 0)
+		{
+			nodes.Add(Vector3.zero);
+			Debug.Log("Transform passed had no children to create a path with");
+		}
 	}
 
 	public Path(List<Vector3> path) : this()
-	{
-		nodes = path;
+	{ 
+		nodes = path; 
+
+		if (nodes.Count <= 0)
+		{
+			nodes.Add(Vector3.zero);
+			Debug.Log("List or array passed to make a path was empty");
+		}
 	}
 
 	public Path(Vector3[] path) : this(path.ToList<Vector3>()) {}
