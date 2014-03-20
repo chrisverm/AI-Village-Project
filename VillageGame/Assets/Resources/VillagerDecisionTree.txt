@@ -1,4 +1,4 @@
-IIsCartClose|20
+IIsCartClose|50
 LSeek|Cart
 IIsMayorClose|30
 LSeek_Arrival|Mayor

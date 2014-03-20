@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 
 public enum Condition
 {
@@ -44,18 +45,48 @@ public class Weather : MonoBehaviour
 
 	private Condition condition;
 	public Moon moon;
+	private Timer timer;
+	private bool dittlySquat;
 
 	public void Start ()
 	{
 		InitDictionary();
 
 		moon.Initialize(Condition.FULL_MOON);
-		moon.ChangeState(Condition.BLOOD_MOON);
+		//moon.ChangeState(Condition.BLOOD_MOON);
+
+		timer = new Timer();
+		
+		timer.AutoReset = false;
+		timer.Elapsed += timerElapsed;
+		timer.Interval = Random.Range(30.0f, 60.0f) * 1000;
+		timer.Start();
 	}
 
 	public void Update ()
 	{
-
+		if (dittlySquat) 
+		{
+			Condition newCondition = condition;
+			if (condition != Condition.FULL_MOON)
+			{
+				newCondition = Condition.FULL_MOON;
+			}
+			else
+			{
+				while (condition == newCondition) 
+				{
+					newCondition = (Condition)Random.Range(0,3);
+				}
+			}
+			
+			//Debug.Log(newCondition);
+			condition = newCondition;
+			moon.ChangeState(newCondition);
+			dittlySquat = false;
+			timer.Interval = Random.Range(30.0f, 60.0f) * 1000;
+			timer.Start();
+		}
 	}
 
 	private void InitDictionary()
@@ -68,4 +99,7 @@ public class Weather : MonoBehaviour
 			condDict.Add(conditions[i].element, conditions[i].data);
 		}
 	}
+
+	private void timerElapsed(object sender, ElapsedEventArgs e)
+	{ dittlySquat = true; }
 }

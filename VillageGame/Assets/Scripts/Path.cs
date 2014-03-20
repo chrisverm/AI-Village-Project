@@ -15,8 +15,8 @@ public class Path
 	
 	public Vector3 this[int index]
 	{
-		get { return nodes[index % nodes.Count]; } // what about when nodes = 0?
-		set { nodes[index % nodes.Count] = value; }
+		get { if (index < 0) index = 0; return nodes[index % nodes.Count]; } // what about when nodes = 0?
+		set { if (index < 0) index = 0; nodes[index % nodes.Count] = value; } // this could go craaaazzy.
 	}
 
 	private Path()

@@ -20,6 +20,8 @@ public class NPC : Character
 	protected override void Start() 
     {
         base.Start();
+
+
 	}
 	
 	// Update is called once per frame
@@ -41,7 +43,7 @@ public class NPC : Character
 	private void Decide()
 	{
 		Node n = Decisioner.Decide(this, decisionTree);
-		
+
 		behavior = (Behavior)Enum.Parse(typeof(Behavior), n.Func.ToUpper());
 		
 		switch(n.Args)
