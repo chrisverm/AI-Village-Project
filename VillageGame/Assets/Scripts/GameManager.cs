@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-
-
 	public int numberOfvillagers;
 	public int numberOfWerewolves;
 	public Object villagerPrefab;

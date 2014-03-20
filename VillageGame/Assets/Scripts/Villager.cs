@@ -21,7 +21,7 @@ public class Villager : NPC
 
 		base.Update();
 
-		if (rational && Random.Range(0.0f, 1.0f) > 0.99f)
+		if (rational && Random.Range(0.0f, 1.0f) > 0.99999f)
 		{
 			rational = false;
 

@@ -42,9 +42,14 @@ public class PlayerCamera : MonoBehaviour
 
 		position *= distFromTarget;
 		position += target.position;
-		position.y = Mathf.Clamp(position.y, 0.1f, target.position.y + distFromTarget);
+
+		Vector3 rayOrigin = new Vector3(position.x, 100, position.z);
+		RaycastHit rayHit;
+		Physics.Raycast(rayOrigin, Vector3.down, out rayHit);
+
+		position.y = Mathf.Clamp(position.y, rayHit.point.y + 0.5f, target.position.y + distFromTarget);
+
 		transform.position = position;
-		
 		transform.LookAt(target);
 	}
 }
