@@ -29,6 +29,7 @@ public class Moon : MonoBehaviour
 
 		transition = 0.0f;
 		transitionTime = Weather.CondDict[currCondition].TransitionTime;
+		Debug.Log(prevCondition + " : " + currCondition);
 	}
 
 	public void Update()
@@ -39,6 +40,7 @@ public class Moon : MonoBehaviour
 		if (Transitioning)
 		{
 			float t = transition / transitionTime;
+			Debug.Log(transition + " : " + transitionTime);
 			moon.renderer.material.color = Color.Lerp(Weather.CondDict[prevCondition].MoonColor, 
 			                                          Weather.CondDict[currCondition].MoonColor, 
 			                                          t);
@@ -54,6 +56,11 @@ public class Moon : MonoBehaviour
 				RenderSettings.fog = true;
 				RenderSettings.fogColor = Color.black;
 				RenderSettings.fogDensity = Mathf.Lerp(0, 0.02f, t);
+			}
+			else if (prevCondition == Condition.NEW_MOON)
+			{
+				//RenderSettings.fogDensity = Mathf.Lerp(0.2f, 0, t);
+				//if (t > 4.9) RenderSettings.fog = false;
 			}
 			else
 			{

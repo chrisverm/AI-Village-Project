@@ -59,12 +59,37 @@ public class Weather : MonoBehaviour
 		
 		timer.AutoReset = false;
 		timer.Elapsed += timerElapsed;
+		ResetTimer();
+	}
+
+	private void ResetTimer()
+	{
+		timer.Stop();
 		timer.Interval = Random.Range(30.0f, 60.0f) * 1000;
 		timer.Start();
 	}
 
 	public void Update ()
 	{
+		if (Input.GetKeyUp(KeyCode.B))
+		{
+			ResetTimer();
+			condition = Condition.BLOOD_MOON;
+			moon.ChangeState(condition);
+		}
+		if (Input.GetKeyUp(KeyCode.N))
+		{
+			ResetTimer();
+			condition = Condition.NEW_MOON;
+			moon.ChangeState(condition);
+		}
+		if (Input.GetKeyUp(KeyCode.F))
+		{
+			ResetTimer();
+			condition = Condition.FULL_MOON;
+			moon.ChangeState(condition);
+		}
+
 		if (dittlySquat) 
 		{
 			Condition newCondition = condition;
@@ -79,13 +104,11 @@ public class Weather : MonoBehaviour
 					newCondition = (Condition)Random.Range(0,3);
 				}
 			}
-			
-			//Debug.Log(newCondition);
+
 			condition = newCondition;
 			moon.ChangeState(newCondition);
 			dittlySquat = false;
-			timer.Interval = Random.Range(30.0f, 60.0f) * 1000;
-			timer.Start();
+			ResetTimer();
 		}
 	}
 
