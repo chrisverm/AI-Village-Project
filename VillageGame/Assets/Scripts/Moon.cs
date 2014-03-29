@@ -29,7 +29,6 @@ public class Moon : MonoBehaviour
 
 		transition = 0.0f;
 		transitionTime = Weather.CondDict[currCondition].TransitionTime;
-		Debug.Log(prevCondition + " : " + currCondition);
 	}
 
 	public void Update()
@@ -40,7 +39,6 @@ public class Moon : MonoBehaviour
 		if (Transitioning)
 		{
 			float t = transition / transitionTime;
-			Debug.Log(transition + " : " + transitionTime);
 			moon.renderer.material.color = Color.Lerp(Weather.CondDict[prevCondition].MoonColor, 
 			                                          Weather.CondDict[currCondition].MoonColor, 
 			                                          t);

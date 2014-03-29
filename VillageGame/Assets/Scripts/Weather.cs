@@ -16,18 +16,12 @@ public class ConditionData
 	[SerializeField] private Color moon;
 	[SerializeField] private Color aura;
 	[SerializeField] private Color light;
-	[SerializeField] private float auraAlpha;
 	[SerializeField] private float transitionTime;
 
 	public Color MoonColor { get { return moon; } }
 	public Color AuraColor { get { return aura; } }
 	public Color LightColor { get { return light; } }
 	public float TransitionTime { get { return transitionTime; } }
-
-	public void Initialize()
-	{
-		aura.a = auraAlpha;
-	}
 }
 
 [System.Serializable]
@@ -71,46 +65,38 @@ public class Weather : MonoBehaviour
 
 	public void Update ()
 	{
-		if (Input.GetKeyUp(KeyCode.B))
-		{
-			ResetTimer();
-			condition = Condition.BLOOD_MOON;
-			moon.ChangeState(condition);
-		}
-		if (Input.GetKeyUp(KeyCode.N))
-		{
-			ResetTimer();
-			condition = Condition.NEW_MOON;
-			moon.ChangeState(condition);
-		}
+        if (Input.GetKeyUp(KeyCode.B))
+        { ChangeCondition(Condition.BLOOD_MOON); }
+
+        if (Input.GetKeyUp(KeyCode.N))
+        { ChangeCondition(Condition.NEW_MOON); }
+
 		if (Input.GetKeyUp(KeyCode.F))
-		{
-			ResetTimer();
-			condition = Condition.FULL_MOON;
-			moon.ChangeState(condition);
-		}
+		{ ChangeCondition(Condition.FULL_MOON); }
 
 		if (dittlySquat) 
 		{
 			Condition newCondition = condition;
 			if (condition != Condition.FULL_MOON)
-			{
-				newCondition = Condition.FULL_MOON;
-			}
+			{ newCondition = Condition.FULL_MOON; }
 			else
 			{
 				while (condition == newCondition) 
-				{
-					newCondition = (Condition)Random.Range(0,3);
-				}
+				{ newCondition = (Condition)Random.Range(0,3); }
 			}
 
-			condition = newCondition;
-			moon.ChangeState(newCondition);
+            ChangeCondition(newCondition);
 			dittlySquat = false;
-			ResetTimer();
 		}
 	}
+
+    private void ChangeCondition(Condition newCondition)
+    {
+        Debug.Log("Changing to " + newCondition + " from " + condition);
+        condition = newCondition;
+        moon.ChangeState(newCondition);
+        ResetTimer();
+    }
 
 	private void InitDictionary()
 	{
@@ -118,7 +104,6 @@ public class Weather : MonoBehaviour
 
 		for (int i = 0; i < conditions.Count; i++)
 		{
-			conditions[i].data.Initialize();
 			condDict.Add(conditions[i].element, conditions[i].data);
 		}
 	}
