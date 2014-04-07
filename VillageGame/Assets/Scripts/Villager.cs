@@ -36,6 +36,9 @@ public class Villager : NPC
 
 		if (collider.bounds.Intersects(closestEnemy.collider.bounds))
 		{
+			// werewolf makes killing sound
+			closestEnemy.Play("Kill");
+
 			Respawn();
 		}
 
@@ -62,5 +65,4 @@ public class Villager : NPC
 		Position = GameManager.Instance.villagerSpawnLocations[Random.Range(0,5)].position;
 		GameManager.Instance.KillVillager();
 	}
-
 }

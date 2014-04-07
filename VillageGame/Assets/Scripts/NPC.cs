@@ -106,4 +106,13 @@ public class NPC : Character
 		
 		return closest;
 	}
+
+	/// <summary>
+	/// Play the audio for the specified category
+	/// </summary>
+	/// <param name="audioCategory">Audio category to be played</param>
+	public void Play(string audioCategory)
+	{
+		AudioController.PlayMusic(audioCategory);
+	}
 }
