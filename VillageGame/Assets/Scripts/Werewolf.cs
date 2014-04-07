@@ -19,6 +19,9 @@ public class Werewolf : NPC
 	{
 		closestEnemy = GetClosestVillager();
 
+		if((pastBehavior != Behavior.SEEK && pastBehavior != Behavior.SEEK_ARRIVAL) && behavior == Behavior.SEEK)
+			AudioController.PlayMusic("Growl");
+
 		base.Update();
 	}
 

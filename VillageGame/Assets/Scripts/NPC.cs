@@ -8,6 +8,7 @@ public class NPC : Character
 {
 	protected bool rational;
 	protected Behavior behavior;
+	protected Behavior pastBehavior;
 	protected object behaviorData;
 	protected DecisionTree decisionTree;
 
@@ -27,6 +28,8 @@ public class NPC : Character
 	// Update is called once per frame
 	protected override void Update() 
     {
+		pastBehavior = behavior;
+
 		if (rational)
 			Decide();
 

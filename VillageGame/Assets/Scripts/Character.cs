@@ -26,8 +26,8 @@ public class Character : Entity
 		velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
 		characterControler.Move(Velocity);
 
-		if (this is Mayor)
-			StabalizeOnTerrain();
+		//if (this is Mayor)
+			//StabalizeOnTerrain();
 
 		transform.LookAt(Position + Velocity.normalized, Up);
     }
