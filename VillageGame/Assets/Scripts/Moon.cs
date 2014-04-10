@@ -14,9 +14,9 @@ public class Moon : MonoBehaviour
 	{
 		currCondition = initialCondition;
 
-		moon.renderer.material.color = Weather.CondDict[initialCondition].MoonColor;
-		aura.renderer.material.color = Weather.CondDict[initialCondition].AuraColor;
-		dirLight.color = Weather.CondDict[initialCondition].LightColor;
+		moon.renderer.material.color = WeatherManager.CondDict[initialCondition].MoonColor;
+		aura.renderer.material.color = WeatherManager.CondDict[initialCondition].AuraColor;
+		dirLight.color = WeatherManager.CondDict[initialCondition].LightColor;
 
 		transition = 0.0f;
 		transitionTime = 0.0f;
@@ -28,25 +28,25 @@ public class Moon : MonoBehaviour
 		currCondition = newCondition;
 
 		transition = 0.0f;
-		transitionTime = Weather.CondDict[currCondition].TransitionTime;
+		transitionTime = WeatherManager.CondDict[currCondition].TransitionTime;
 	}
 
 	public void Update()
 	{
-		aura.transform.LookAt(GameManager.Instance.mayor.Position);
+		aura.transform.LookAt(Managers.Game.mayor.Position);
 		aura.transform.Rotate(new Vector3(90, 0, 0));
 
 		if (Transitioning)
 		{
 			float t = transition / transitionTime;
-			moon.renderer.material.color = Color.Lerp(Weather.CondDict[prevCondition].MoonColor, 
-			                                          Weather.CondDict[currCondition].MoonColor, 
+			moon.renderer.material.color = Color.Lerp(WeatherManager.CondDict[prevCondition].MoonColor, 
+			                                          WeatherManager.CondDict[currCondition].MoonColor, 
 			                                          t);
-			aura.renderer.material.color = Color.Lerp(Weather.CondDict[prevCondition].AuraColor, 
-			                                          Weather.CondDict[currCondition].AuraColor, 
+			aura.renderer.material.color = Color.Lerp(WeatherManager.CondDict[prevCondition].AuraColor, 
+			                                          WeatherManager.CondDict[currCondition].AuraColor, 
 			                                          t);
-			dirLight.color = Color.Lerp(Weather.CondDict[prevCondition].LightColor, 
-			                            Weather.CondDict[currCondition].LightColor, 
+			dirLight.color = Color.Lerp(WeatherManager.CondDict[prevCondition].LightColor, 
+			                            WeatherManager.CondDict[currCondition].LightColor, 
 			                            t);
 
 			if (currCondition == Condition.NEW_MOON)

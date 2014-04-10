@@ -36,11 +36,11 @@ public static class Decisioner
 		switch(func)
 		{
 		case "IsCartClose":
-			b = IsEntityClose(c, GameManager.Instance.cart, float.Parse(args));
+			b = IsEntityClose(c, Managers.Game.cart, float.Parse(args));
 			//Debug.Log("Is the cart close? " + b);
 			return b;
 		case "IsMayorClose":
-			b = IsEntityClose(c, GameManager.Instance.mayor, float.Parse(args));
+			b = IsEntityClose(c, Managers.Game.mayor, float.Parse(args));
 			//Debug.Log("Is the mayor close? " + b);
 			return b;
 		case "IsWerewolfClose":
@@ -52,7 +52,7 @@ public static class Decisioner
 			//Debug.Log("Is a villager close? " + b);
 			return b;
 		case "IsHouseClose":
-			b = IsEntityClose(c, GameManager.Instance.house, float.Parse(args));
+			b = IsEntityClose(c, Managers.Game.house, float.Parse(args));
 			//Debug.Log("Is the house close? " + b);
 			return b;
 		default:
@@ -68,7 +68,7 @@ public static class Decisioner
 	
 	private static bool IsWerewolfClose(NPC c, float maxDist)
 	{
-		foreach (Werewolf werewolf in GameManager.Instance.Werewolves) 
+		foreach (Werewolf werewolf in Managers.Game.Werewolves) 
 		{
 			if (Vector3.Distance(c.Position, werewolf.Position) < maxDist)
 				return true;
@@ -79,7 +79,7 @@ public static class Decisioner
 	
 	private static bool IsVillagerClose(NPC c, float maxDist)
 	{
-		foreach (Villager villager in GameManager.Instance.Villagers) 
+		foreach (Villager villager in Managers.Game.Villagers) 
 		{
 			if (Vector3.Distance(c.Position, villager.Position) < maxDist)
 				return true;

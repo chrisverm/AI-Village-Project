@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
 
 	public UI ui;
 
-	private static GameManager instance;
-	public static GameManager Instance { get { return instance; } }
+	//private static GameManager instance;
+	//public static GameManager Instance { get { return instance; } }
 
 	public GameObject debug;
 	private List<Werewolf> werewolves;
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		instance = this;
+		//instance = this;
 
 		werewolves = new List<Werewolf>();
 		villagers = new List<Villager>();

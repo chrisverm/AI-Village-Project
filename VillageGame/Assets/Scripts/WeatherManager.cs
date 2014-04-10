@@ -31,7 +31,7 @@ public class ConditionPair
 	[SerializeField] public ConditionData data;
 }
 
-public class Weather : MonoBehaviour
+public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 {
 	public List<ConditionPair> conditions;
 	private static Dictionary<Condition, ConditionData> condDict;

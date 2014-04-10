@@ -26,7 +26,7 @@ public class Villager : NPC
 			rational = false;
 
 			NavMeshPath p = new NavMeshPath();
-			NavMesh.CalculatePath(Position, GameManager.Instance.cart.Position, -1, p);
+			NavMesh.CalculatePath(Position, Managers.Game.cart.Position, -1, p);
 			path = Path.CreatePath(p.corners);
 			node = 1;
 
@@ -42,19 +42,19 @@ public class Villager : NPC
 			Respawn();
 		}
 
-		if (Vector3.Distance(Position, GameManager.Instance.cart.Position) < 10)
+		if (Vector3.Distance(Position, Managers.Game.cart.Position) < 10)
 		{
 			Respawn();
-			GameManager.Instance.SaveVillager();
+			Managers.Game.SaveVillager();
 		}
 	}
 
 	void OnTriggerEnter(Collider c)
 	{
-		if (c.gameObject == GameManager.Instance.cart.gameObject)
+		if (c.gameObject == Managers.Game.cart.gameObject)
 		{
             Respawn();
-            GameManager.Instance.SaveVillager();
+			Managers.Game.SaveVillager();
 		}
 	}
 
@@ -62,7 +62,7 @@ public class Villager : NPC
 	{
 		Debug.Log("KILLING VILLAGER");
 		// ew.
-		Position = GameManager.Instance.villagerSpawnLocations[Random.Range(0,5)].position;
-		GameManager.Instance.KillVillager();
+		Position = Managers.Game.villagerSpawnLocations[Random.Range(0,5)].position;
+		Managers.Game.KillVillager();
 	}
 }

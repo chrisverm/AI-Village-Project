@@ -52,10 +52,10 @@ public class NPC : Character
 		switch(n.Args)
 		{
 		case "Cart":
-			behaviorData = GameManager.Instance.cart.Position;
+			behaviorData = Managers.Game.cart.Position;
 			break;
 		case "Mayor":
-			behaviorData = GameManager.Instance.mayor.Position;
+			behaviorData = Managers.Game.mayor.Position;
 			break;
 		case "Werewolf":
 			behaviorData = closestEnemy.Position;
@@ -78,7 +78,7 @@ public class NPC : Character
 		float dist = float.MaxValue;
 		float curDist = 0;
 		
-		foreach (Werewolf werewolf in GameManager.Instance.Werewolves) 
+		foreach (Werewolf werewolf in Managers.Game.Werewolves) 
 		{
 			curDist = Vector3.Distance(this.Position, werewolf.Position);
 			if (curDist < dist)
@@ -97,7 +97,7 @@ public class NPC : Character
 		float dist = float.MaxValue;
 		float curDist = 0;
 		
-		foreach (Villager villager in GameManager.Instance.Villagers) 
+		foreach (Villager villager in Managers.Game.Villagers) 
 		{
 			curDist = Vector3.Distance(this.Position, villager.Position);
 			if (curDist < dist)
