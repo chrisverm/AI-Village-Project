@@ -52,10 +52,10 @@ public class NPC : Character
 		switch(n.Args)
 		{
 		case "Cart":
-			behaviorData = Managers.Game.cart.Position;
+			behaviorData = Managers.Entity.MainObjs["Cart"].transform.position;
 			break;
 		case "Mayor":
-			behaviorData = Managers.Game.mayor.Position;
+			behaviorData = Managers.Entity.MainObjs["Mayor"].transform.position;
 			break;
 		case "Werewolf":
 			behaviorData = closestEnemy.Position;

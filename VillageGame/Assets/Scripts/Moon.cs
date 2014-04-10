@@ -33,7 +33,7 @@ public class Moon : MonoBehaviour
 
 	public void Update()
 	{
-		aura.transform.LookAt(Managers.Game.mayor.Position);
+		aura.transform.LookAt(Managers.Entity.MainObjs["Mayor"].transform.position);
 		aura.transform.Rotate(new Vector3(90, 0, 0));
 
 		if (Transitioning)

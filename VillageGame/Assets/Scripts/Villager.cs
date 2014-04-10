@@ -26,7 +26,7 @@ public class Villager : NPC
 			rational = false;
 
 			NavMeshPath p = new NavMeshPath();
-			NavMesh.CalculatePath(Position, Managers.Game.cart.Position, -1, p);
+			NavMesh.CalculatePath(Position, Managers.Entity.MainObjs["Cart"].transform.position, -1, p);
 			path = Path.CreatePath(p.corners);
 			node = 1;
 
@@ -42,7 +42,7 @@ public class Villager : NPC
 			Respawn();
 		}
 
-		if (Vector3.Distance(Position, Managers.Game.cart.Position) < 10)
+		if (Vector3.Distance(Position, Managers.Entity.MainObjs["Cart"].transform.position) < 10)
 		{
 			Respawn();
 			Managers.Game.SaveVillager();
@@ -51,7 +51,7 @@ public class Villager : NPC
 
 	void OnTriggerEnter(Collider c)
 	{
-		if (c.gameObject == Managers.Game.cart.gameObject)
+		if (c.gameObject == Managers.Entity.MainObjs["Cart"])
 		{
             Respawn();
 			Managers.Game.SaveVillager();
