@@ -25,11 +25,8 @@ public class GameManager : MonoBehaviour
 	public Transform villagerSpawnLocationsObject;
 	public Transform werewolfSpawnLocationsObject;
 
-	public List<GameObject> werewolfPathObjects;
-	public List<GameObject> villagerPathObjects;
-
-	private List<Path> werewolfPaths;
-	private List<Path> villagerPaths;
+	[SerializeField] private List<Path> werewolfPaths;
+	[SerializeField] private List<Path> villagerPaths;
 
 	public List<Transform> villagerSpawnLocations;
 	public List<Transform> werewolfSpawnLocations;
@@ -39,22 +36,13 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		Path.debug = debug;
 		instance = this;
 
 		werewolves = new List<Werewolf>();
 		villagers = new List<Villager>();
 		obstacles = new List<Entity>();
-		villagerPaths = new List<Path>();
-		werewolfPaths = new List<Path>();
 		villagerSpawnLocations = new List<Transform>();
 		werewolfSpawnLocations = new List<Transform>();
-
-		foreach (GameObject path in villagerPathObjects) 
-		{ villagerPaths.Add(new Path(path.transform)); }
-
-		foreach (GameObject path in werewolfPathObjects) 
-		{ werewolfPaths.Add(new Path(path.transform)); }
 
 		for (int i = 0; i < villagerSpawnLocationsObject.childCount ; i++) 
 		{ villagerSpawnLocations.Add(villagerSpawnLocationsObject.transform.GetChild(i)); }

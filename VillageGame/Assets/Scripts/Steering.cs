@@ -98,7 +98,7 @@ public static class Steering
 			return Seek(c, new Vector3(normalPoint.x, 0, normalPoint.y));
 			//return new Vector3(normalPoint.x, 0, normalPoint.y);
 		}
-		else if (Vector2.Distance(characterPos, nextNode) < p.NodeBoundary)
+		else if (Vector2.Distance(characterPos, nextNode) < p.NodeRadius)
 		{
 			c.node++;
 			return FollowPath(c, p);

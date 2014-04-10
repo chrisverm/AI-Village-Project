@@ -2,63 +2,27 @@
 using System.Linq;
 using System.Collections.Generic;
 
-public class Path
+public class Path : MonoBehaviour
 {
-	private float pathWidth;
-	private float nodeBoundary;
-
-	public static GameObject debug;
-	private List<Vector3> nodes;
+	[SerializeField] private List<Transform> nodes;
+	[SerializeField] private float pathWidth = 10;
+	[SerializeField] private float nodeRadius = 1;
 
 	public float PathWidth { get { return pathWidth; } }
-	public float NodeBoundary { get { return nodeBoundary; } }
+	public float NodeRadius { get { return nodeRadius; } }
+	public int NumNodes { get { return nodes.Count; } }
 	
 	public Vector3 this[int index]
 	{
-		get { if (index < 0) index = 0; return nodes[index % nodes.Count]; } // what about when nodes = 0?
-		set { if (index < 0) index = 0; nodes[index % nodes.Count] = value; } // this could go craaaazzy.
+		get { if (index < 0) index = 0; return nodes[index % nodes.Count].position; } // what about when nodes = 0?
+		set { if (index < 0) index = 0; nodes[index % nodes.Count].position = value; } // this could go craaaazzy.
 	}
 
-	private Path()
-	{
-		pathWidth = 10;
-		nodeBoundary = 1;
-	}
-	
-	public Path(Transform parent) : this()
-	{
-		nodes = new List<Vector3>();
-		
-		for (int i = 0; i < parent.childCount; i++) 
-		{
-			nodes.Add(parent.GetChild(i).position);
-		}
-
-		if (nodes.Count <= 0)
-		{
-			nodes.Add(Vector3.zero);
-			Debug.Log("Transform passed had no children to create a path with");
-		}
-	}
-
-	public Path(List<Vector3> path) : this()
-	{ 
-		nodes = path; 
-
-		if (nodes.Count <= 0)
-		{
-			nodes.Add(Vector3.zero);
-			Debug.Log("List or array passed to make a path was empty");
-		}
-	}
-
-	public Path(Vector3[] path) : this(path.ToList<Vector3>()) {}
-	
 	public int ClosestNode(Vector3 currentPosition)
 	{
 		float closestDist = float.MaxValue;
 		int closestNode = 0;
-
+		
 		for (int node = 0; node < nodes.Count; node++) 
 		{
 			float dist = Vector3.Distance(this[node], currentPosition);
@@ -69,7 +33,51 @@ public class Path
 				closestDist = dist;
 			}
 		}
-
+		
 		return closestNode;
+	}
+
+	public static Path CreatePath(Transform transforms, float pathWidth = 10.0f, float nodeRadius = 1.0f)
+	{
+		Path p = new Path ();
+		p.pathWidth = pathWidth;
+		p.nodeRadius = nodeRadius;
+
+		p.nodes = new List<Transform> (transforms.childCount);
+		for (int i = 0; i < transforms.childCount; i++) 
+		{
+			p.nodes.Add(transforms.GetChild(i));
+		}
+
+		if (p.nodes.Count <= 0)
+		{
+			p.nodes.Add(new GameObject().transform);
+			p.nodes[0].position = Vector3.zero;
+			Debug.Log("Transform passed had no children to create a path with");
+		}
+
+		return p;
+	}
+
+	public static Path CreatePath(Vector3[] array, float pathWidth = 10.0f, float nodeRadius = 1.0f)
+	{
+		Path p = new Path ();
+		p.pathWidth = pathWidth;
+		p.nodeRadius = nodeRadius;
+
+		p.nodes = new List<Transform> (array.Length);
+		for (int i = 0; i < array.Length; i++)
+		{
+			p.nodes[i].position = array[i];
+		}
+		
+		if (p.nodes.Count <= 0)
+		{
+			p.nodes.Add(new GameObject().transform);
+			p.nodes[0].position = Vector3.zero;
+			Debug.Log("List or array passed to make a path was empty");
+		}
+
+		return p;
 	}
 }

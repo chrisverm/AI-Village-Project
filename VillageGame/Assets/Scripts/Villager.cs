@@ -27,7 +27,7 @@ public class Villager : NPC
 
 			NavMeshPath p = new NavMeshPath();
 			NavMesh.CalculatePath(Position, GameManager.Instance.cart.Position, -1, p);
-			path = new Path(p.corners);
+			path = Path.CreatePath(p.corners);
 			node = 1;
 
 			behavior = Behavior.FOLLOW_PATH;
