@@ -1,0 +1,5 @@
+IIsMayorClose|35
+LFlee|Mayor
+IIsVillagerClose|90
+LSeek|Villager
+LFollow_Path|Path

@@ -1,0 +1,9 @@
+IIsCartClose|25
+LSeek|Cart
+IIsMayorClose|15
+LSeek_Arrival|Mayor
+IIsWerewolfClose|40
+LFlee|Werewolf
+IIsHouseClose|60
+LFollow_Path|Path
+LWander|None
