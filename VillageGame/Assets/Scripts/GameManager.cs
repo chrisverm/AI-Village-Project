@@ -3,63 +3,9 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-	public int numberOfvillagers;
-	public int numberOfWerewolves;
-	public Object villagerPrefab;
-	public Object werewolfPrefab;
 	public Object blimpPrefab;
 
 	public UI ui;
-
-	private List<Werewolf> werewolves;
-	private List<Villager> villagers;
-	private List<Entity> obstacles;
-
-	public Transform villagerSpawnLocationsObject;
-	public Transform werewolfSpawnLocationsObject;
-
-	[SerializeField] private List<Path> werewolfPaths;
-	[SerializeField] private List<Path> villagerPaths;
-
-	public List<Transform> villagerSpawnLocations;
-	public List<Transform> werewolfSpawnLocations;
-	public List<Werewolf> Werewolves { get { return werewolves; } }
-	public List<Villager> Villagers { get { return villagers; } }
-	public List<Entity> Obstacles { get { return obstacles; } }
-
-	void Start()
-	{
-		werewolves = new List<Werewolf>();
-		villagers = new List<Villager>();
-		obstacles = new List<Entity>();
-		villagerSpawnLocations = new List<Transform>();
-		werewolfSpawnLocations = new List<Transform>();
-
-		for (int i = 0; i < villagerSpawnLocationsObject.childCount ; i++) 
-		{ villagerSpawnLocations.Add(villagerSpawnLocationsObject.transform.GetChild(i)); }
-
-		for (int i = 0; i < werewolfSpawnLocationsObject.childCount; i++) 
-		{ werewolfSpawnLocations.Add(werewolfSpawnLocationsObject.transform.GetChild(i)); }
-
-		for (int i = 0; i < numberOfvillagers; i++) 
-		{
-			Villager villager = ((GameObject)Instantiate(villagerPrefab)).GetComponent<Villager>();
-			villagers.Add(villager);
-			villager.transform.position = villagerSpawnLocations[i].position;
-
-			// Give the villagers the path around the house. (path3, index 2).
-			villager.path = villagerPaths[i % villagerPaths.Count];
-		}
-
-		for (int i = 0; i < numberOfWerewolves; i++) 
-		{
-			Werewolf werewolf = ((GameObject)Instantiate(werewolfPrefab)).GetComponent<Werewolf>();
-			werewolves.Add(werewolf);
-			werewolf.transform.position = werewolfSpawnLocations[i].position;
-
-			werewolf.path = werewolfPaths[i % werewolfPaths.Count];
-		}
-	}
 
 	void Update()
 	{

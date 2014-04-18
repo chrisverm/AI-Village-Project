@@ -78,7 +78,7 @@ public class NPC : Character
 		float dist = float.MaxValue;
 		float curDist = 0;
 		
-		foreach (Werewolf werewolf in Managers.Game.Werewolves) 
+		foreach (Werewolf werewolf in Managers.Entity.Werewolves) 
 		{
 			curDist = Vector3.Distance(this.Position, werewolf.Position);
 			if (curDist < dist)
@@ -97,7 +97,7 @@ public class NPC : Character
 		float dist = float.MaxValue;
 		float curDist = 0;
 		
-		foreach (Villager villager in Managers.Game.Villagers) 
+		foreach (Villager villager in Managers.Entity.Villagers) 
 		{
 			curDist = Vector3.Distance(this.Position, villager.Position);
 			if (curDist < dist)

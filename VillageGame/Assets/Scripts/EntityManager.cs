@@ -8,11 +8,25 @@ public class ObjectIDPair
 	public GameObject obj;
 }
 
-public class EntityManager : SingletonMonoBehaviour<EntityManager>
+public class EntityManager : MonoBehaviour
 {
-	[SerializeField] public ObjectIDPair[] kvPairs;
-	private Dictionary<string, GameObject> mainObjs;
+	public int numberOfVillagers;
+	public int numberOfWerewolves;
+	
+	public Object villagerPrefab;
+	public Object werewolfPrefab;
 
+	public List<Path> werewolfPaths;
+	public List<Path> villagerPaths;
+
+	public ObjectIDPair[] kvPairs;
+
+	private Dictionary<string, GameObject> mainObjs;
+	private List<Werewolf> werewolves;
+	private List<Villager> villagers;
+	
+	public List<Werewolf> Werewolves { get { return werewolves; } }
+	public List<Villager> Villagers { get { return villagers; } }
 	public Dictionary<string, GameObject> MainObjs { get { return mainObjs; } }
 
 	// Use this for initialization
@@ -22,8 +36,30 @@ public class EntityManager : SingletonMonoBehaviour<EntityManager>
 		
 		for (int i = 0; i < kvPairs.Length; i++)
 			mainObjs.Add(kvPairs[i].id, kvPairs[i].obj);
+
+		villagers = new List<Villager>();
+		werewolves = new List<Werewolf>();
+
+		if (numberOfVillagers > Managers.Spawn.VillagerSpawns ||
+		    numberOfWerewolves > Managers.Spawn.WerewolfSpawns)
+		{ Debug.Log("Too many villagers/werewolves for the spawn points we have"); }
+
+		for (int i = 0; i < numberOfVillagers; i++) 
+		{
+			Villager villager = ((GameObject)Instantiate(villagerPrefab)).GetComponent<Villager>();
+			Managers.Spawn.SpawnVillager(villager, i);
+			
+			villager.path = villagerPaths[i % villagerPaths.Count];
+			villagers.Add(villager);
+		}
+
+		for (int i = 0; i < numberOfWerewolves; i++) 
+		{	
+			Werewolf wolf = ((GameObject)Instantiate(werewolfPrefab)).GetComponent<Werewolf>();
+			Managers.Spawn.SpawnWerewolf(wolf, i);
+
+			wolf.path = werewolfPaths[i % werewolfPaths.Count];
+			werewolves.Add(wolf);
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () { }
 }

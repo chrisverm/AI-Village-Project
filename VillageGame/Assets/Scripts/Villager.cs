@@ -62,7 +62,7 @@ public class Villager : NPC
 	{
 		Debug.Log("KILLING VILLAGER");
 		// ew.
-		Position = Managers.Game.villagerSpawnLocations[Random.Range(0,5)].position;
+		Managers.Spawn.SpawnVillager(this);
 		Managers.Game.KillVillager();
 	}
 }

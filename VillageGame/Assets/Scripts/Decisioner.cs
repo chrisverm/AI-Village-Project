@@ -68,7 +68,7 @@ public static class Decisioner
 	
 	private static bool IsWerewolfClose(NPC c, float maxDist)
 	{
-		foreach (Werewolf werewolf in Managers.Game.Werewolves) 
+		foreach (Werewolf werewolf in Managers.Entity.Werewolves) 
 		{
 			if (Vector3.Distance(c.Position, werewolf.Position) < maxDist)
 				return true;
@@ -79,7 +79,7 @@ public static class Decisioner
 	
 	private static bool IsVillagerClose(NPC c, float maxDist)
 	{
-		foreach (Villager villager in Managers.Game.Villagers) 
+		foreach (Villager villager in Managers.Entity.Villagers) 
 		{
 			if (Vector3.Distance(c.Position, villager.Position) < maxDist)
 				return true;
