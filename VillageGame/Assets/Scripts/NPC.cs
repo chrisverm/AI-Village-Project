@@ -43,6 +43,12 @@ public class NPC : Character
 
 	}
 
+	protected void getTree(char c)
+	{
+		string newTree = c + "0" + Managers.Weather.CurrentCondition;
+		decisionTree = Managers.DecDictionary ["newTree"];
+	}
+
 	private void Decide()
 	{
 		Node n = Decisioner.Decide(this, decisionTree);

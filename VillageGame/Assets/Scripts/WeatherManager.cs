@@ -42,6 +42,9 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 	private Timer timer;
 	private bool dittlySquat;
 
+	public Condition CurrentCondition
+	{ get { return condition; } }
+
 	public void Start ()
 	{
 		InitDictionary();
