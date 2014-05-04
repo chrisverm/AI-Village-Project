@@ -28,6 +28,7 @@ public class Managers : SingletonMonoBehaviour<Managers>
 		spawnManager = (SpawningManager)FindObjectOfType(typeof(SpawningManager));
 
 		LoadDecisionTrees ();
+
 	}
 
 	void LoadDecisionTrees()

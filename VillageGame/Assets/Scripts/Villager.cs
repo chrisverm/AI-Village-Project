@@ -6,7 +6,7 @@ public class Villager : NPC
 	protected override void Start()
 	{
 		base.Start();
-		maxSpeed = 0.4f;
+		//maxSpeed = 0.4f;
 		maxForce = 0.035f;
 
 		node = path.ClosestNode(Position);

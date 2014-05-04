@@ -7,6 +7,13 @@ public class GameManager : MonoBehaviour
 
 	public UI ui;
 
+
+	void Start()
+	{
+		GenePool.Initialize (10);
+		GenePool.CreatePopulation ();
+	}
+
 	void Update()
 	{
 		if (Input.GetMouseButtonDown(0)) // left mouse button

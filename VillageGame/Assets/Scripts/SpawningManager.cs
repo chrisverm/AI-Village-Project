@@ -31,11 +31,13 @@ public class SpawningManager : MonoBehaviour
 	{ 
 		villager.transform.position = villagerSpawnLocations[
      		(index == -1) ? Random.Range(0, VillagerSpawns) : index];
+		villager.SetGenes (GenePool.PopGene());
 	}
 
 	public void SpawnWerewolf(Werewolf wolf, int index = 0)
 	{
 		wolf.transform.position = werewolfSpawnLocations[
         	(index == -1) ? Random.Range(0, WerewolfSpawns) : index];
+		wolf.SetGenes (GenePool.PopGene());
 	}
 }

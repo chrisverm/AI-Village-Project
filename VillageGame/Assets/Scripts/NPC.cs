@@ -12,6 +12,8 @@ public class NPC : Character
 	protected object behaviorData;
 	protected DecisionTree decisionTree;
 
+	private byte speedGene;
+
 	protected NPC closestEnemy;
 
 	public Path path;
@@ -21,6 +23,7 @@ public class NPC : Character
 	protected override void Start() 
     {
         base.Start();
+		speedGene = 0;
 
 
 	}
@@ -42,6 +45,43 @@ public class NPC : Character
 	{
 
 	}
+
+	public void SetGenes(byte speed)
+	{
+		if (speedGene == 0) 
+		{
+			speedGene = speed;
+
+			maxSpeed = (GenToPhen(speedGene)/ 200.0f);
+
+			if(this is Villager)
+			{
+				maxSpeed += 0.1f;
+			}
+			else if(this is Werewolf)
+			{
+				maxSpeed += 0.3f;
+			}
+			else 
+			{
+				Debug.Log ("Ledel ledel ledel leeuu");
+			}
+			Debug.Log (maxSpeed);
+		} 
+		else 
+		{
+			Debug.Log ("Cannot set speedGene more than once");
+		}
+	}
+
+	protected float GenToPhen(byte gene)
+	{
+		float lb = 0.0f;
+		float ub = 200.0f;
+		float step = (ub - lb) / 256;
+		return (gene * step + lb);
+	}
+
 
 	protected void getTree(char c)
 	{

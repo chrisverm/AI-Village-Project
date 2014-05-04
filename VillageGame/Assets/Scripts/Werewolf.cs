@@ -8,7 +8,7 @@ public class Werewolf : NPC
 		base.Start();
 
 		node = path.ClosestNode(Position);
-		maxSpeed = 0.6f;
+		//maxSpeed = 0.6f;
 		maxForce = 0.035f;
 
 		rational = true;
