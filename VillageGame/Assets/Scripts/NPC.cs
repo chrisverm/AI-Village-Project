@@ -94,6 +94,9 @@ public class NPC : Character
 		Node n = Decisioner.Decide(this, decisionTree);
 
 		behavior = (Behavior)Enum.Parse(typeof(Behavior), n.Func.ToUpper());
+
+        text.ClearText();
+        text.AddText(n.Func);
 		
 		switch(n.Args)
 		{
