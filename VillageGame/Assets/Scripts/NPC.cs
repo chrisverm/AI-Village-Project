@@ -19,13 +19,13 @@ public class NPC : Character
 	public Path path;
 	public int node;
 
+	public NPCText text;
+
 	// Use this for initialization
 	protected override void Start() 
     {
         base.Start();
 		speedGene = 0;
-
-
 	}
 	
 	// Update is called once per frame
