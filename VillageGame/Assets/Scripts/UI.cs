@@ -9,6 +9,8 @@ public class UI : MonoBehaviour
     public GUITexture loseBar;
     public GUITexture loseNub;
 	
+	public GUIText results;
+	
 	public float progressWin = 0;
 	public float progressLose = 0;
 	
@@ -19,6 +21,8 @@ public class UI : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		results.enabled = false;
+		
 		SavedVillagers = 0;
 		DeadVillagers = 0;
 	}
@@ -43,4 +47,24 @@ public class UI : MonoBehaviour
         temp.x = 50+(deadVillagers / progressLose) * 80 - 1;
         loseNub.pixelInset = temp;
     }
+	
+	/// <summary>
+	/// Shows the results screen with the given text.
+	/// </summary>
+	/// <param name='text'>
+	/// Results text to show.
+	/// </param>
+	public void ShowResults(string text)
+	{
+		results.text = text;
+		results.enabled = true;
+	}
+	
+	/// <summary>
+	/// Hides the results screen.
+	/// </summary>
+	public void HideResults()
+	{
+		results.enabled = false;
+	}
 }
