@@ -6,6 +6,8 @@ using System.Collections;
 
 public class NPC : Character 
 {
+	const float MUT_PROB = 0.2f;
+
 	protected bool rational;
 	protected Behavior behavior;
 	protected Behavior pastBehavior;
@@ -13,6 +15,8 @@ public class NPC : Character
 	protected DecisionTree decisionTree;
 
 	private byte speedGene;
+
+	public byte SpeedGene { get { return speedGene; } }
 
 	protected NPC closestEnemy;
 
@@ -71,6 +75,19 @@ public class NPC : Character
 		else 
 		{
 			Debug.Log ("Cannot set speedGene more than once");
+		}
+	}
+
+	public void Mutate()
+	{
+		if (Random.Range(0.0f,1.0f) < MUT_PROB)
+		{
+			BitArray chromBits = Util.Byte2BitAra(speedGene);
+			int mutPt = Random.Range(0,8);
+			bool locus = !chromBits.Get();
+			chromBits.Set(mutPt, locus);
+			speedGene = Util.BitAra2Byte(chromBits);
+
 		}
 	}
 

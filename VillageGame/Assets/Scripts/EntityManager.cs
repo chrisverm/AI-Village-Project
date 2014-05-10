@@ -22,8 +22,8 @@ public class EntityManager : MonoBehaviour
 	public ObjectIDPair[] kvPairs;
 
 	private Dictionary<string, GameObject> mainObjs;
-	private List<Werewolf> werewolves;
-	private List<Villager> villagers;
+	public List<Werewolf> werewolves;
+	public List<Villager> villagers;
 	
 	public List<Werewolf> Werewolves { get { return werewolves; } }
 	public List<Villager> Villagers { get { return villagers; } }
