@@ -12,7 +12,10 @@ public class EntityManager : MonoBehaviour
 {
 	public int numberOfVillagers;
 	public int numberOfWerewolves;
-	
+
+	public string gibberishFilePath;
+	public int maxSentanceLength;
+
 	public Object villagerPrefab;
 	public Object werewolfPrefab;
 
@@ -29,6 +32,14 @@ public class EntityManager : MonoBehaviour
 	public List<Villager> Villagers { get { return villagers; } }
 	public Dictionary<string, GameObject> MainObjs { get { return mainObjs; } }
 
+	private Markov markovChain;
+
+	void Awake()
+	{
+		markovChain = new Markov();
+		markovChain.CreateGraph(gibberishFilePath);
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -42,7 +53,7 @@ public class EntityManager : MonoBehaviour
 
 		if (numberOfVillagers > Managers.Spawn.VillagerSpawns ||
 		    numberOfWerewolves > Managers.Spawn.WerewolfSpawns)
-		{ Debug.Log("Too many villagers/werewolves for the spawn points we have"); }
+		{ Debug.LogError("Too many villagers/werewolves for the spawn points we have"); }
 
 		for (int i = 0; i < numberOfVillagers; i++) 
 		{
@@ -61,5 +72,26 @@ public class EntityManager : MonoBehaviour
 			wolf.path = werewolfPaths[i % werewolfPaths.Count];
 			werewolves.Add(wolf);
 		}
+	}
+
+	/// <summary>
+	/// Returns the next gibberish sentance to use.
+	/// </summary>
+	/// <returns> The gibberish sentance. </returns>
+	public string GetGibberish()
+	{
+		// Get a sentance.
+		string sent = string.Join(" ", markovChain.GenGibSent(maxSentanceLength));
+
+		// Capitalize first letter.
+		sent = char.ToUpper(sent[0]) + sent.Substring(1);
+
+		// Trim end of spaces, tabs, and null chars.
+		sent = sent.TrimEnd(' ', '\t', '\0');
+
+		// End sentace with a period.
+		sent += ".";
+
+		return sent;
 	}
 }

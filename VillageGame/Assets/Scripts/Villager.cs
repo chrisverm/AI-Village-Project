@@ -30,7 +30,7 @@ public class Villager : NPC
 			path = Path.CreatePath(p.corners);
 			node = 1;
 
-			behavior = Behavior.FOLLOW_PATH;
+			SetBehavior(Behavior.FOLLOW_PATH);
 			behaviorData = path;
 		}
 
@@ -56,6 +56,17 @@ public class Villager : NPC
             Respawn();
 			Managers.Game.SaveVillager();
 		}
+	}
+
+	/// <summary>
+	/// When behavior is changed.
+	/// Adds text above the other text for villager gibberish
+	/// </summary>
+	protected override void OnBehaviorChanged (Behavior newBehavior)
+	{
+		base.OnBehaviorChanged(newBehavior);
+
+		text.AddTextAbove(Managers.Entity.GetGibberish());
 	}
 
 	protected override void Respawn()

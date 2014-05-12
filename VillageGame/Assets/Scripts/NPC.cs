@@ -109,11 +109,8 @@ public class NPC : Character
 	{
 		Node n = Decisioner.Decide(this, decisionTree);
 
-		behavior = (Behavior)System.Enum.Parse(typeof(Behavior), n.Func.ToUpper());
+		SetBehavior( (Behavior)System.Enum.Parse(typeof(Behavior), n.Func.ToUpper()) );
 
-        text.ClearText();
-        text.AddText(n.Func);
-		
 		switch(n.Args)
 		{
 		case "Cart":
@@ -135,6 +132,30 @@ public class NPC : Character
 			behaviorData = Vector3.zero;
 			break;
 		}
+	}
+
+	/// <summary>
+	/// If not already the behavior, changes it to the new behavior and calls OnBehaviorChanged();
+	/// </summary>
+	/// <param name="newBehavior"> The new behavior.</param>
+	protected void SetBehavior(Behavior newBehavior)
+	{
+		if (newBehavior != behavior)
+		{
+			behavior = newBehavior;
+			OnBehaviorChanged(newBehavior);
+		}
+	}
+
+	/// <summary>
+	/// Called when the behavior changes 
+	/// (updates text).
+	/// </summary>
+	/// <param name="newBehavior"> The new behavior.</param>
+	protected virtual void OnBehaviorChanged(Behavior newBehavior)
+	{
+		text.ClearText();
+		text.AddText(newBehavior.ToString().ToLower());
 	}
 	
 	protected Werewolf GetClosestWerewolf()
