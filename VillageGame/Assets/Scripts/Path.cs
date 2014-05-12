@@ -11,7 +11,7 @@ public class Path : MonoBehaviour
 	public float PathWidth { get { return pathWidth; } }
 	public float NodeRadius { get { return nodeRadius; } }
 	public int NumNodes { get { return nodes.Count; } }
-	
+
 	public Vector3 this[int index]
 	{
 		get { if (index < 0) index = 0; return nodes[index % nodes.Count].position; } // what about when nodes = 0?
@@ -39,7 +39,10 @@ public class Path : MonoBehaviour
 
 	public static Path CreatePath(Transform transforms, float pathWidth = 10.0f, float nodeRadius = 1.0f)
 	{
-		Path p = new Path ();
+		GameObject obj = new GameObject("New Path", typeof(Path));
+		obj.transform.parent = GameObject.Find("Paths").transform;
+		
+		Path p = obj.GetComponent<Path>();
 		p.pathWidth = pathWidth;
 		p.nodeRadius = nodeRadius;
 
@@ -59,16 +62,23 @@ public class Path : MonoBehaviour
 		return p;
 	}
 
-	public static Path CreatePath(Vector3[] array, float pathWidth = 10.0f, float nodeRadius = 1.0f)
+	public static Path CreatePath(Vector3[] array, float pathWidth = 10.0f, float nodeRadius = 4.0f)
 	{
-		Path p = new Path ();
+		GameObject obj = new GameObject("New Path", typeof(Path));
+		obj.transform.parent = GameObject.Find("Paths").transform;
+
+		Path p = obj.GetComponent<Path>();
 		p.pathWidth = pathWidth;
 		p.nodeRadius = nodeRadius;
 
-		p.nodes = new List<Transform> (array.Length);
+		p.nodes = new List<Transform>(array.Length);
 		for (int i = 0; i < array.Length; i++)
 		{
-			p.nodes[i].position = array[i];
+			Transform newTransform = new GameObject("Node " + i).transform;
+			newTransform.position = array[i];
+			newTransform.parent = obj.transform;
+
+			p.nodes.Add(newTransform);
 		}
 		
 		if (p.nodes.Count <= 0)

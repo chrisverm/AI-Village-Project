@@ -5,7 +5,6 @@ public class PlayerCamera : MonoBehaviour
 {
 	public Camera cam;
 	private float distFromTarget;
-	private float height;
 	private Vector2 rotAngles;
 	
 	public Transform target;
@@ -13,8 +12,7 @@ public class PlayerCamera : MonoBehaviour
 	void Start() 
 	{
 		float targetHeight = target.collider.bounds.extents.y;
-		
-		height = targetHeight * 1.5f;
+
 		distFromTarget = targetHeight * 3.5f;
 
 		rotAngles = new Vector2(0, -30 * Mathf.Deg2Rad);

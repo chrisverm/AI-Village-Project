@@ -61,7 +61,10 @@ public class Villager : NPC
 	protected override void Respawn()
 	{
 		Debug.Log("KILLING VILLAGER");
-		// ew.
+
+		if (path.name == "New Path")
+			Destroy(path.gameObject);
+
 		Managers.Spawn.SpawnVillager(this);
 		Managers.Game.KillVillager();
 	}

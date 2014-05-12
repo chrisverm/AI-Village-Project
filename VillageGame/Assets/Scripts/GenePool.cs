@@ -37,8 +37,8 @@ public static class GenePool {
 		Villager p1 = null;
 		Villager p2 = null;
 
-		byte c1 = null;
-		byte c2 = null;
+		byte c1 = 0;//null;
+		byte c2 = 0;//null;
 
 		if (Random.Range (0.0f, 1.0f) < CROSSOVER_PROB) 
 		{
@@ -55,7 +55,7 @@ public static class GenePool {
 
 	}
 
-	private byte CrossOver(byte p1, byte p2)
+	private static byte CrossOver(byte p1, byte p2)
 	{
 		BitArray p1Bits = Util.Byte2BitAra (p1);
 		BitArray p2Bits = Util.Byte2BitAra (p2);

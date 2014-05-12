@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
@@ -84,7 +83,7 @@ public class NPC : Character
 		{
 			BitArray chromBits = Util.Byte2BitAra(speedGene);
 			int mutPt = Random.Range(0,8);
-			bool locus = !chromBits.Get();
+			bool locus = !chromBits.Get(mutPt);
 			chromBits.Set(mutPt, locus);
 			speedGene = Util.BitAra2Byte(chromBits);
 
@@ -103,14 +102,14 @@ public class NPC : Character
 	protected void getTree(char c)
 	{
 		string newTree = c + "0" + Managers.Weather.CurrentCondition;
-		decisionTree = Managers.DecDictionary ["newTree"];
+		decisionTree = Managers.DecDictionary[newTree];
 	}
 
 	private void Decide()
 	{
 		Node n = Decisioner.Decide(this, decisionTree);
 
-		behavior = (Behavior)Enum.Parse(typeof(Behavior), n.Func.ToUpper());
+		behavior = (Behavior)System.Enum.Parse(typeof(Behavior), n.Func.ToUpper());
 
         text.ClearText();
         text.AddText(n.Func);

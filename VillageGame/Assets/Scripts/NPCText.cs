@@ -36,7 +36,8 @@ public class NPCText : MonoBehaviour {
 	{
 		if (Camera.current != null)
 		{
-			bool enable = Vector3.Distance(transform.position, Camera.current.transform.position) < drawDistance;
+			float dist =  Vector3.Distance(transform.position, Camera.current.transform.position);
+			bool enable = dist < drawDistance;
 
             if (enable)
             {
@@ -64,11 +65,27 @@ public class NPCText : MonoBehaviour {
 	public void AddText(string text)
 	{
         root.position += Vector3.up * 1.5f;
-        TextMesh newText = (TextMesh)Instantiate(textPrefab, root.position + Vector3.down * meshes.Count * 1.5f, root.rotation);
+        TextMesh newText = (TextMesh)Instantiate(textPrefab, root.position + Vector3.down * meshes.Count * 1.5f * 2, root.rotation);
         newText.transform.parent = root;
 		
 		newText.text = text;
 
+		meshes.Add(newText);
+	}
+
+	/// <summary>
+	/// Adds the text above the rest of the text.
+	/// BE CAREFUL. This really only works for adding ONE thing above everything else.
+	/// </summary>
+	/// <param name="text">Text.</param>
+	public void AddTextAbove(string text)
+	{
+		TextMesh newText = (TextMesh)Instantiate(textPrefab, root.position + Vector3.up * 1.5f * 2, root.rotation);
+
+		newText.transform.parent = root;
+		
+		newText.text = text;
+		
 		meshes.Add(newText);
 	}
 

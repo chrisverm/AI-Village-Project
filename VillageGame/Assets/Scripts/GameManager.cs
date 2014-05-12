@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 		int i = 1;
 		foreach (Villager villager in Managers.Entity.Villagers)
 		{
-			results += "Villager : " + i + " Did this...\n";
+			results += "Villager : " + i + " had this speed gene : " + villager.SpeedGene + System.Environment.NewLine;
 			
 			i++;
 		}
@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour
 		i = 1;
 		foreach (Werewolf wolf in Managers.Entity.Werewolves)
 		{
-			results += "Werewolf : " + i + " Did this...\n";
-			
+			results += "Werewolf : " + i + " had this speed gene : " + wolf.SpeedGene + System.Environment.NewLine;
+
 			i++;
 		}
 		
