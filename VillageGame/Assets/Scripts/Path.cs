@@ -15,7 +15,7 @@ public class Path : MonoBehaviour
 	public Vector3 this[int index]
 	{
 		get { if (index < 0) index = 0; return nodes[index % nodes.Count].position; } // what about when nodes = 0?
-		set { if (index < 0) index = 0; nodes[index % nodes.Count].position = value; } // this could go craaaazzy.
+		set { if (index < 0) index = 0; nodes[index % nodes.Count].position = value; } // this could go craaaayzzee.
 	}
 
 	public int ClosestNode(Vector3 currentPosition)
