@@ -38,46 +38,65 @@ public class EntityManager : MonoBehaviour
 	{
 		markovChain = new Markov();
 		markovChain.CreateGraph(gibberishFilePath);
+
+        mainObjs = new Dictionary<string, GameObject>(kvPairs.Length);
+        
+        for (int i = 0; i < kvPairs.Length; i++)
+            mainObjs.Add(kvPairs[i].id, kvPairs[i].obj);
+        
+        villagers = new List<Villager>();
+        werewolves = new List<Werewolf>();
 	}
 
-	// Use this for initialization
-	void Start ()
-	{
-		mainObjs = new Dictionary<string, GameObject>(kvPairs.Length);
-		
-		for (int i = 0; i < kvPairs.Length; i++)
-			mainObjs.Add(kvPairs[i].id, kvPairs[i].obj);
+    /// <summary>
+    /// Creates the NPC's at the beginning of a round.
+    /// </summary>
+    public void CreateNPCs()
+    {
+        DestroyNPCs();
 
-		villagers = new List<Villager>();
-		werewolves = new List<Werewolf>();
+        if (numberOfVillagers > Managers.Spawn.VillagerSpawns ||
+            numberOfWerewolves > Managers.Spawn.WerewolfSpawns)
+        { Debug.LogError("Too many villagers/werewolves for the spawn points we have"); }
 
-		if (numberOfVillagers > Managers.Spawn.VillagerSpawns ||
-		    numberOfWerewolves > Managers.Spawn.WerewolfSpawns)
-		{ Debug.LogError("Too many villagers/werewolves for the spawn points we have"); }
+        for (int i = 0; i < numberOfVillagers; i++) 
+        {
+            Villager villager = ((GameObject)Instantiate(villagerPrefab)).GetComponent<Villager>();
+            Managers.Spawn.SpawnVillager(villager, i);
+            
+            villager.path = villagerPaths[i % villagerPaths.Count];
+            villagers.Add(villager);
+        }
+        
+        for (int i = 0; i < numberOfWerewolves; i++) 
+        {   
+            Werewolf wolf = ((GameObject)Instantiate(werewolfPrefab)).GetComponent<Werewolf>();
+            Managers.Spawn.SpawnWerewolf(wolf, i);
+            
+            wolf.path = werewolfPaths[i % werewolfPaths.Count];
+            werewolves.Add(wolf);
+        }
+    }
 
-		for (int i = 0; i < numberOfVillagers; i++) 
-		{
-			Villager villager = ((GameObject)Instantiate(villagerPrefab)).GetComponent<Villager>();
-			Managers.Spawn.SpawnVillager(villager, i);
-			
-			villager.path = villagerPaths[i % villagerPaths.Count];
-			villagers.Add(villager);
-		}
+    /// <summary>
+    /// Destroy the current NPCs.
+    /// </summary>
+    public void DestroyNPCs()
+    {
+        foreach (Villager villager in villagers)
+        { Destroy(villager.gameObject); }
 
-		for (int i = 0; i < numberOfWerewolves; i++) 
-		{	
-			Werewolf wolf = ((GameObject)Instantiate(werewolfPrefab)).GetComponent<Werewolf>();
-			Managers.Spawn.SpawnWerewolf(wolf, i);
+        foreach (Werewolf wolf in werewolves)
+        { Destroy(wolf.gameObject); }
 
-			wolf.path = werewolfPaths[i % werewolfPaths.Count];
-			werewolves.Add(wolf);
-		}
-	}
+        werewolves.Clear();
+        villagers.Clear();
+    }
 
 	/// <summary>
-	/// Returns the next gibberish sentance to use.
-	/// </summary>
-	/// <returns> The gibberish sentance. </returns>
+    /// Returns the next gibberish sentance to use.
+    /// </summary>
+    /// <returns> The gibberish sentance. </returns>
 	public string GetGibberish()
 	{
 		// Get a sentance.

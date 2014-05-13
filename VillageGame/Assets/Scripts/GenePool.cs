@@ -27,10 +27,9 @@ public static class GenePool {
 
 	public static byte PopGene()
 	{
-		return genes[popIndex++];
+		return genes[popIndex++ % genes.Length];
 	}
 	
-
 	public static Villager BreedVillager()
 	{
 
