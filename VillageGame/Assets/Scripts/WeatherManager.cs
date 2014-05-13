@@ -39,8 +39,6 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 
 	private Condition condition;
 	public Moon moon;
-	private Timer timer;
-	private bool dittlySquat;
 
 	public Condition CurrentCondition
 	{ get { return condition; } }
@@ -50,20 +48,6 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 		InitDictionary();
 
 		moon.Initialize(Condition.FULL_MOON);
-		//moon.ChangeState(Condition.BLOOD_MOON);
-
-		timer = new Timer();
-		
-		timer.AutoReset = false;
-		timer.Elapsed += timerElapsed;
-		ResetTimer();
-	}
-
-	private void ResetTimer()
-	{
-		timer.Stop();
-		timer.Interval = Random.Range(30.0f, 60.0f) * 1000;
-		timer.Start();
 	}
 
 	public void Update ()
@@ -76,29 +60,23 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 
 		if (Input.GetKeyUp(KeyCode.F))
 		{ ChangeCondition(Condition.FULL_MOON); }
-
-		if (dittlySquat) 
-		{
-			Condition newCondition = condition;
-			if (condition != Condition.FULL_MOON)
-			{ newCondition = Condition.FULL_MOON; }
-			else
-			{
-				while (condition == newCondition) 
-				{ newCondition = (Condition)Random.Range(0,3); }
-			}
-
-            ChangeCondition(newCondition);
-			dittlySquat = false;
-		}
 	}
+
+    public void RandomCondition()
+    {
+        Condition newCondition = condition;
+
+        while (condition == newCondition) 
+        { newCondition = (Condition)Random.Range(0,3); }
+
+        ChangeCondition(newCondition);
+    }
 
     private void ChangeCondition(Condition newCondition)
     {
         Debug.Log("Changing to " + newCondition + " from " + condition);
         condition = newCondition;
         moon.ChangeState(newCondition);
-        ResetTimer();
     }
 
 	private void InitDictionary()
@@ -111,6 +89,12 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 		}
 	}
 
-	private void timerElapsed(object sender, ElapsedEventArgs e)
-	{ dittlySquat = true; }
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="t">T.</param>
+    public void MoveMooon(float t)
+    {
+        // slerpit.
+    }
 }

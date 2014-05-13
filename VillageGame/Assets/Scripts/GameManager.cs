@@ -4,18 +4,37 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	public Object blimpPrefab;
-
 	public UI ui;
+    public float roundTime;
 
+    private bool timing;
+    private float startTime;
+    private float t;
 
 	void Start()
 	{
-		GenePool.Initialize (10);
-		GenePool.CreatePopulation ();
+		GenePool.Initialize(10);
+		GenePool.CreatePopulation();
+
+        StartNewRound();
 	}
 
 	void Update()
 	{
+        if (timing)
+        {
+            t = (Time.time -  startTime) / roundTime;
+            Managers.Weather.MoveMooon(t);
+
+            if (t >= 1) 
+                RoundEnded();
+        }
+        else
+        {
+            if (Input.GetKeyUp(KeyCode.Return))
+                StartNewRound();
+        }
+
 		if (Input.GetMouseButtonDown(0)) // left mouse button
 		{
 			Screen.showCursor = false;
@@ -35,6 +54,12 @@ public class GameManager : MonoBehaviour
 	public void StartNewRound()
 	{
 		ui.HideResults();
+
+        Managers.Entity.CreateNPCs();
+        Managers.Weather.RandomCondition();
+
+        startTime = Time.time;
+        timing = true;
 	}
 	
 	/// <summary>
@@ -61,8 +86,12 @@ public class GameManager : MonoBehaviour
 
 			i++;
 		}
-		
+
+		results += System.Environment.NewLine + "Press Enter to continue to the next round...";
+
 		ui.ShowResults(results);
+
+        timing = false;
 	}
 	
 	/// <summary>

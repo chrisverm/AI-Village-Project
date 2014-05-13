@@ -57,8 +57,8 @@ public class Moon : MonoBehaviour
 			}
 			else if (prevCondition == Condition.NEW_MOON)
 			{
-				//RenderSettings.fogDensity = Mathf.Lerp(0.2f, 0, t);
-				//if (t > 4.9) RenderSettings.fog = false;
+				RenderSettings.fogDensity = Mathf.Lerp(0.02f, 0, t);
+				if (t > 4.9) RenderSettings.fog = false;
 			}
 			else
 			{
