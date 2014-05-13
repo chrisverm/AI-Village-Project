@@ -90,11 +90,17 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 	}
 
 	/// <summary>
-	/// 
+	/// Slerp the moon here.
 	/// </summary>
 	/// <param name="t">T.</param>
     public void MoveMooon(float t)
     {
         // slerpit.
+        // Get initial position
+        // Get final position (inspector thing?)
+        // Actually those things should be done at start and then never changed :/
+
+        // position = Vector3.Slerp(initial, final, t)
+        // Cut, print, take a nap.
     }
 }

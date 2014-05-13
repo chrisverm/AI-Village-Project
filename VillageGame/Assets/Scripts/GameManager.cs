@@ -11,10 +11,13 @@ public class GameManager : MonoBehaviour
     private float startTime;
     private float t;
 
+    private Vector3 mayorStartPos;
+
 	void Start()
 	{
 		GenePool.Initialize(10);
 		GenePool.CreatePopulation();
+        mayorStartPos = Managers.Entity.MainObjs["Mayor"].transform.position;
 
         StartNewRound();
 	}
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
 	{
 		ui.HideResults();
 
+        Managers.Entity.MainObjs["Mayor"].transform.position = mayorStartPos;
         Managers.Entity.CreateNPCs();
         Managers.Weather.RandomCondition();
 

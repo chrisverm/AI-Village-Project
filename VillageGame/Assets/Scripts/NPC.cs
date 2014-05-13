@@ -28,7 +28,6 @@ public class NPC : Character
 	protected override void Start() 
     {
         base.Start();
-		speedGene = 0;
 	}
 	
 	// Update is called once per frame
