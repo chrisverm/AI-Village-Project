@@ -78,6 +78,18 @@ public class EntityManager : MonoBehaviour
         }
     }
 
+	public void UpdateDecisionTrees()
+	{
+		foreach (Villager villager in villagers)
+		{
+			villager.SetTree('v');
+		}
+		foreach (Werewolf werewolf in werewolves)
+		{
+			werewolf.SetTree('w');
+		}
+	}
+
     /// <summary>
     /// Destroy the current NPCs.
     /// </summary>

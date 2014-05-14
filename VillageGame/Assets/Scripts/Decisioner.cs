@@ -32,7 +32,9 @@ public static class Decisioner
 	private static bool CheckDecisions(NPC c, string func, string args)
 	{
 		bool b = false;
-		
+
+		c.dist = float.Parse (args);
+
 		switch(func)
 		{
 		case "IsCartClose":

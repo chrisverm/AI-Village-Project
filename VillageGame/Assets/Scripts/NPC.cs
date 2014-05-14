@@ -22,6 +22,8 @@ public class NPC : Character
 	public Path path;
 	public int node;
 
+	public float dist;
+
 	public NPCText text;
 
 	// Use this for initialization
@@ -98,9 +100,9 @@ public class NPC : Character
 	}
 
 
-	protected void getTree(char c)
+	public void SetTree(char c)
 	{
-		string newTree = c + "0" + Managers.Weather.CurrentCondition;
+		string newTree = c + "0" + (int)Managers.Weather.CurrentCondition;
 		decisionTree = Managers.DecDictionary[newTree];
 	}
 
@@ -154,7 +156,8 @@ public class NPC : Character
 	protected virtual void OnBehaviorChanged(Behavior newBehavior)
 	{
 		text.ClearText();
-		text.AddText(newBehavior.ToString().ToLower());
+		text.AddText(newBehavior.ToString().ToLower() + " : " + dist);
+		
 	}
 	
 	protected Werewolf GetClosestWerewolf()

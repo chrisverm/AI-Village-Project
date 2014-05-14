@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
         Managers.Entity.MainObjs["Mayor"].transform.position = mayorStartPos;
         Managers.Entity.CreateNPCs();
         Managers.Weather.RandomCondition();
+		Managers.Entity.UpdateDecisionTrees();
 
         startTime = Time.time;
         timing = true;
