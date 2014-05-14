@@ -23,6 +23,7 @@ public static class Decisioner
 			else
 			{
 				currNode = currNode.FalsePtr;
+				c.behavDist = currNode.Args;
 			}
 		}
 		
@@ -33,7 +34,8 @@ public static class Decisioner
 	{
 		bool b = false;
 
-		c.dist = float.Parse (args);
+		//c.dist = float.Parse (args);
+		//Debug.Log(Time.time);
 
 		switch(func)
 		{

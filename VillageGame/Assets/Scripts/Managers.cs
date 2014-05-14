@@ -40,12 +40,5 @@ public class Managers : SingletonMonoBehaviour<Managers>
 		decDictionary.Add("w00", new DecisionTree("Assets/Resources/VillagerDecisionTree.txt"));
 		decDictionary.Add("w01", new DecisionTree("Assets/Resources/VillagerDecisionTreeBlood.txt"));
 		decDictionary.Add("w02", new DecisionTree("Assets/Resources/VillagerDecisionTreeNew.txt"));
-
-		foreach (var item in decDictionary.Keys) 
-		{
-			Debug.Log(item);
-		}
-
-		Debug.Log (decDictionary.Keys.ToString());
 	}
 }

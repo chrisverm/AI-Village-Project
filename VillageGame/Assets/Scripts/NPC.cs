@@ -22,7 +22,7 @@ public class NPC : Character
 	public Path path;
 	public int node;
 
-	public float dist;
+	public string behavDist;
 
 	public NPCText text;
 
@@ -70,7 +70,7 @@ public class NPC : Character
 			{
 				Debug.Log ("Ledel ledel ledel leeuu");
 			}
-			Debug.Log (maxSpeed);
+			//Debug.Log (maxSpeed);
 		} 
 		else 
 		{
@@ -98,7 +98,6 @@ public class NPC : Character
 		float step = (ub - lb) / 256;
 		return (gene * step + lb);
 	}
-
 
 	public void SetTree(char c)
 	{
@@ -156,7 +155,7 @@ public class NPC : Character
 	protected virtual void OnBehaviorChanged(Behavior newBehavior)
 	{
 		text.ClearText();
-		text.AddText(newBehavior.ToString().ToLower() + " : " + dist);
+		text.AddText(newBehavior.ToString().ToLower() + " : " + behavDist);
 		
 	}
 	

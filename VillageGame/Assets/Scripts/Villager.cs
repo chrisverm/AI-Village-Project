@@ -12,7 +12,6 @@ public class Villager : NPC
 		node = path.ClosestNode(Position);
 
 		rational = true;
-		decisionTree = new DecisionTree("Assets/Resources/VillagerDecisionTree.txt");
 	}
 
 	protected override void Update()

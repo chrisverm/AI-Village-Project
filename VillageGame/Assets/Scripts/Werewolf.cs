@@ -12,7 +12,6 @@ public class Werewolf : NPC
 		maxForce = 0.035f;
 
 		rational = true;
-		decisionTree = new DecisionTree("Assets/Resources/WerewolfDecisionTree.txt");
 	}
 
 	protected override void Update()
