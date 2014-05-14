@@ -156,6 +156,7 @@ public class NPC : Character
 	{
 		text.ClearText();
 		text.AddText(newBehavior.ToString().ToLower() + " : " + behavDist);
+        text.AddText("My Speed Gene is : " + SpeedGene);
 		
 	}
 	

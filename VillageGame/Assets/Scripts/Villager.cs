@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Villager : NPC
 {
+    public VillagerAudio villagerAudio;
+
 	protected override void Start()
 	{
 		base.Start();
@@ -19,6 +21,9 @@ public class Villager : NPC
 		closestEnemy = GetClosestWerewolf();
 
 		base.Update();
+
+        if (behavior == Behavior.FLEE)
+            villagerAudio.SafePlayHelp();
 
 		if (rational && Random.Range(0.0f, 1.0f) > 0.99999f)
 		{
