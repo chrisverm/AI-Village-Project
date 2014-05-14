@@ -37,8 +37,8 @@ public class Managers : SingletonMonoBehaviour<Managers>
 		decDictionary.Add("v00", new DecisionTree("Assets/Resources/VillagerDecisionTree.txt"));
 		decDictionary.Add("v01", new DecisionTree("Assets/Resources/VillagerDecisionTreeBlood.txt"));
 		decDictionary.Add("v02", new DecisionTree("Assets/Resources/VillagerDecisionTreeNew.txt"));
-		decDictionary.Add("w00", new DecisionTree("Assets/Resources/VillagerDecisionTree.txt"));
-		decDictionary.Add("w01", new DecisionTree("Assets/Resources/VillagerDecisionTreeBlood.txt"));
-		decDictionary.Add("w02", new DecisionTree("Assets/Resources/VillagerDecisionTreeNew.txt"));
+		decDictionary.Add("w00", new DecisionTree("Assets/Resources/WerewolfDecisionTree.txt"));
+		decDictionary.Add("w01", new DecisionTree("Assets/Resources/WerewolfDecisionTreeBlood.txt"));
+		decDictionary.Add("w02", new DecisionTree("Assets/Resources/WerewolfDecisionTreeNew.txt"));
 	}
 }
