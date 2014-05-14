@@ -8,6 +8,7 @@ public enum Condition
 	FULL_MOON = 0,
 	BLOOD_MOON = 1,
 	NEW_MOON = 2,
+	NONE = 3,
 }
 
 [System.Serializable]
@@ -39,13 +40,21 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 
 	private Condition condition;
 	public Moon moon;
+	public Transform finalMoonTransform;
+
+	private Vector3 initialMoonPos;
+	private Vector3 finalMoonPos;
 
 	public Condition CurrentCondition
 	{ get { return condition; } }
 
 	public void Start ()
 	{
+		condition = Condition.NONE;
 		InitDictionary();
+
+		initialMoonPos = moon.transform.position;
+		finalMoonPos = finalMoonTransform.position;
 
 		moon.Initialize(Condition.FULL_MOON);
 	}
@@ -62,12 +71,17 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 		{ ChangeCondition(Condition.FULL_MOON); }
 	}
 
-    public void RandomCondition()
+    public void RandomCondition(bool totalRandom = false)
     {
+		if (totalRandom)
+			condition = Condition.NONE;
         Condition newCondition = condition;
 
         while (condition == newCondition) 
-        { newCondition = (Condition)Random.Range(0,3); }
+        { newCondition = (Condition)Random.Range(0,2); }
+
+		if (newCondition == Condition.NONE)
+			Debug.LogError("Invalid condition - NONE");
 
         ChangeCondition(newCondition);
     }
@@ -100,6 +114,7 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
         // Get final position (inspector thing?)
         // Actually those things should be done at start and then never changed :/
 
+		moon.transform.position = Vector3.Slerp(initialMoonPos, finalMoonPos, t);
         // position = Vector3.Slerp(initial, final, t)
         // Cut, print, take a nap.
     }
