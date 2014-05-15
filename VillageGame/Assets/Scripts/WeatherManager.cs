@@ -37,6 +37,7 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
 	public List<ConditionPair> conditions;
 	private static Dictionary<Condition, ConditionData> condDict;
 	public static Dictionary<Condition, ConditionData> CondDict { get { return condDict; } }
+    public WeatherAudio weatherAudio;
 
 	private Condition condition;
 	public Moon moon;
@@ -91,6 +92,8 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
         Debug.Log("Changing to " + newCondition + " from " + condition);
         condition = newCondition;
         moon.ChangeState(newCondition);
+
+        weatherAudio.PlayRoundBegin(newCondition);
     }
 
 	private void InitDictionary()
