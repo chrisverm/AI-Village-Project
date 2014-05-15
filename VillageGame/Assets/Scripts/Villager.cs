@@ -40,9 +40,6 @@ public class Villager : NPC
 
 		if (collider.bounds.Intersects(closestEnemy.collider.bounds))
 		{
-			// werewolf makes killing sound
-			closestEnemy.Play("Kill");
-
 			Respawn();
 		}
 
@@ -71,6 +68,7 @@ public class Villager : NPC
 		base.OnBehaviorChanged(newBehavior);
 
 		text.AddTextAbove(Managers.Entity.GetGibberish());
+		villagerAudio.SafePlayGibberish();
 	}
 
 	protected override void Respawn()
@@ -80,7 +78,18 @@ public class Villager : NPC
 		if (path.name == "New Path")
 			Destroy(path.gameObject);
 
-		Managers.Spawn.SpawnVillager(this);
+		villagerAudio.SafePlayDeath();
+		//Managers.Spawn.SpawnVillager(this);
+        villagerAudio.transform.parent = null;
+        gameObject.SetActive(false);
 		Managers.Game.KillVillager();
 	}
+
+    void OnDestroy()
+    {
+        if (villagerAudio.transform.parent != transform)
+        {
+            Destroy(villagerAudio);
+        }
+    }
 }

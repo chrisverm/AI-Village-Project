@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Werewolf : NPC
 {
+	public WerewolfAudio werewolfAudio;
+
 	protected override void Start()
 	{
 		base.Start();
@@ -19,7 +21,7 @@ public class Werewolf : NPC
 		closestEnemy = GetClosestVillager();
 
 		if((pastBehavior != Behavior.SEEK && pastBehavior != Behavior.SEEK_ARRIVAL) && behavior == Behavior.SEEK)
-			AudioController.PlayMusic("Growl");
+			werewolfAudio.SafePlayGrowl();
 
 		base.Update();
 	}
