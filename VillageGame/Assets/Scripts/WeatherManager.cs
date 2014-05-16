@@ -79,7 +79,7 @@ public class WeatherManager : SingletonMonoBehaviour<WeatherManager>
         Condition newCondition = condition;
 
         while (condition == newCondition) 
-        { newCondition = (Condition)Random.Range(0,2); }
+        { newCondition = (Condition)Random.Range(0,3); }
 
 		if (newCondition == Condition.NONE)
 			Debug.LogError("Invalid condition - NONE");
