@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
 	private bool firstRound;
 
+	public bool RoundOver { get { return t >= 1.0f; } }
+
 	void Start()
 	{
 		GenePool.Initialize(Managers.Entity.numberOfVillagers, Managers.Entity.numberOfWerewolves);

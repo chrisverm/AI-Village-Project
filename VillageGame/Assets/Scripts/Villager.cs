@@ -50,11 +50,17 @@ public class Villager : NPC
 		if (collider.bounds.Intersects(closestEnemy.collider.bounds))
 		{
 			KillVillager();
+			((Werewolf)closestEnemy).KilledVillager();
 		}
 
 		if (Vector3.Distance(Position, Managers.Entity.MainObjs["Cart"].transform.position) < 10)
 		{
 			SaveVillager();
+		}
+
+		if (results != Result.Killed && !Managers.Game.RoundOver)
+		{
+			fitness += 1 * Time.deltaTime;
 		}
 	}
 

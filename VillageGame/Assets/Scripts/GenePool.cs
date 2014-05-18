@@ -93,26 +93,28 @@ public static class GenePool {
 		}
 	}
 
-	private static NPC SelectNPC(List<NPC> nps)
+	private static NPC SelectNPC(List<NPC> npcs)
 	{
 		float totFit = 0;
-		for (int i = 0; i < nps.Count; i++)
+		Debug.Log(npcs.Count);
+		for (int i = 0; i < npcs.Count; i++)
 		{
-			totFit += nps[i].Fitness;
+			totFit += npcs[i].Fitness;
 		}
+
+		Debug.Log("totalFitness " + totFit);
+		float roll = Random.Range (0, totFit);
 		
-		float roll = Random.Range (0, totFit - 1);
-		
-		float accum = nps[0].Fitness;
+		float accum = npcs[0].Fitness;
 		int iSel = 0;
 		
-		while (accum <= roll && iSel < nps.Count - 1)
+		while (accum <= roll && iSel < npcs.Count - 1)
 		{
 			iSel++;
-			accum += nps[iSel].Fitness;
+			accum += npcs[iSel].Fitness;
 		}
 		
-		return nps[iSel];
+		return npcs[iSel];
 	}
 
 	private static byte BreedVillager(List<Villager> villagers)
