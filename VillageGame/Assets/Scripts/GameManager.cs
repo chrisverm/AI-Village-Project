@@ -13,12 +13,15 @@ public class GameManager : MonoBehaviour
 
     private Vector3 mayorStartPos;
 
+	private bool firstRound;
+
 	void Start()
 	{
-		GenePool.Initialize(10);
+		GenePool.Initialize(Managers.Entity.numberOfVillagers, Managers.Entity.numberOfWerewolves);
 		GenePool.CreatePopulation();
         mayorStartPos = Managers.Entity.MainObjs["Mayor"].transform.position;
 
+		firstRound = true;
         StartNewRound();
 	}
 
@@ -59,7 +62,9 @@ public class GameManager : MonoBehaviour
 		ui.HideResults();
 
         Managers.Entity.MainObjs["Mayor"].transform.position = mayorStartPos;
+		if (!firstRound) GenePool.Breed();
         Managers.Entity.CreateNPCs();
+		Managers.Entity.SetGenes();
         Managers.Weather.RandomCondition();
 		Managers.Entity.UpdateDecisionTrees();
 
@@ -97,6 +102,7 @@ public class GameManager : MonoBehaviour
 		ui.ShowResults(results);
 
         timing = false;
+		firstRound = false;
 	}
 	
 	/// <summary>

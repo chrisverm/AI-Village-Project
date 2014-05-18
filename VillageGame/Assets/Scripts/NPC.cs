@@ -19,6 +19,13 @@ public class NPC : Character
 
 	protected NPC closestEnemy;
 
+	protected float fitness;
+
+	public float Fitness
+	{
+		get { return fitness; }
+	}
+
 	public Path path;
 	public int node;
 
@@ -52,8 +59,8 @@ public class NPC : Character
 
 	public void SetGenes(byte speed)
 	{
-		if (speedGene == 0) 
-		{
+		//if (speedGene == 0) 
+		//{
 			speedGene = speed;
 
 			maxSpeed = (GenToPhen(speedGene)/ 200.0f);
@@ -71,11 +78,11 @@ public class NPC : Character
 				Debug.Log ("Ledel ledel ledel leeuu");
 			}
 			//Debug.Log (maxSpeed);
-		} 
-		else 
-		{
-			Debug.Log ("Cannot set speedGene more than once");
-		}
+		//} 
+		//else 
+		//{
+		//	Debug.Log ("Cannot set speedGene more than once");
+		//}
 	}
 
 	public void Mutate()

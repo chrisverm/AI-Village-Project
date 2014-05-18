@@ -61,7 +61,7 @@ public class EntityManager : MonoBehaviour
 
         for (int i = 0; i < numberOfVillagers; i++) 
         {
-            Villager villager = ((GameObject)Instantiate(villagerPrefab)).GetComponent<Villager>();
+			Villager villager = ((GameObject)Instantiate(villagerPrefab)).GetComponent<Villager>();
             Managers.Spawn.SpawnVillager(villager, i);
             
             villager.path = villagerPaths[i % villagerPaths.Count];
@@ -124,5 +124,18 @@ public class EntityManager : MonoBehaviour
 		sent += ".";
 
 		return sent;
+	}
+
+	public void SetGenes()
+	{
+		for (int i = 0; i < numberOfVillagers; i++)
+		{
+			villagers[i].SetGenes(GenePool.PopVillagerGene());
+		}
+
+		for (int i = 0; i < numberOfWerewolves; i++)
+		{
+			werewolves[i].SetGenes(GenePool.PopWerewolfGene());
+		}
 	}
 }

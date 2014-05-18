@@ -34,13 +34,13 @@ public class SpawningManager : MonoBehaviour
 
 		// Reset path incase the villager made a break for it.
 		villager.path = Managers.Entity.villagerPaths[0];
-		villager.SetGenes(GenePool.PopGene());
+		//villager.SetGenes(GenePool.PopVillagerGene());
 	}
 
 	public void SpawnWerewolf(Werewolf wolf, int index = 0)
 	{
 		wolf.transform.position = werewolfSpawnLocations[
         	(index == -1) ? Random.Range(0, WerewolfSpawns) : index];
-		wolf.SetGenes(GenePool.PopGene());
+		//wolf.SetGenes(GenePool.PopWerewolfGene());
 	}
 }
