@@ -1,6 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
+public enum Result
+{
+	Killed = 0,
+	Survived = 1,
+	Saved = 2
+}
+
 public class Villager : NPC
 {
     public VillagerAudio villagerAudio;
@@ -108,11 +115,4 @@ public class Villager : NPC
             Destroy(villagerAudio);
         }
     }
-}
-
-enum Result
-{
-	Killed = 0,
-	Survived = 1,
-	Saved = 2
 }
