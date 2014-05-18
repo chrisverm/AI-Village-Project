@@ -4,6 +4,7 @@ using System.Collections;
 public class Villager : NPC
 {
     public VillagerAudio villagerAudio;
+	public Result results;
 
 	protected override void Start()
 	{
@@ -14,6 +15,7 @@ public class Villager : NPC
 		node = path.ClosestNode(Position);
 
 		rational = true;
+		results = Result.Survived;
 	}
 
 	protected override void Update()
@@ -40,13 +42,12 @@ public class Villager : NPC
 
 		if (collider.bounds.Intersects(closestEnemy.collider.bounds))
 		{
-			Respawn();
+			KillVillager();
 		}
 
 		if (Vector3.Distance(Position, Managers.Entity.MainObjs["Cart"].transform.position) < 10)
 		{
-			Respawn();
-			Managers.Game.SaveVillager();
+			SaveVillager();
 		}
 	}
 
@@ -54,8 +55,7 @@ public class Villager : NPC
 	{
 		if (c.gameObject == Managers.Entity.MainObjs["Cart"])
 		{
-            Respawn();
-			Managers.Game.SaveVillager();
+			SaveVillager();
 		}
 	}
 
@@ -71,18 +71,34 @@ public class Villager : NPC
 		villagerAudio.SafePlayGibberish();
 	}
 
+	private void SaveVillager()
+	{
+		Debug.Log("Villager Saved");
+		Managers.Game.SaveVillager();
+		results = Result.Saved;
+
+		Respawn();
+	}
+
+	private void KillVillager()
+	{
+		Debug.Log("Villager Killed");
+		Managers.Game.KillVillager();
+		villagerAudio.SafePlayDeath();
+		results = Result.Killed;
+
+		Respawn();
+	}
+
 	protected override void Respawn()
 	{
-		Debug.Log("KILLING VILLAGER");
+		Debug.Log("Removing Villager");
 
 		if (path.name == "New Path")
 			Destroy(path.gameObject);
 
-		villagerAudio.SafePlayDeath();
-		//Managers.Spawn.SpawnVillager(this);
         villagerAudio.transform.parent = null;
         gameObject.SetActive(false);
-		Managers.Game.KillVillager();
 	}
 
     void OnDestroy()
@@ -92,4 +108,11 @@ public class Villager : NPC
             Destroy(villagerAudio);
         }
     }
+}
+
+enum Result
+{
+	Killed = 0,
+	Survived = 1,
+	Saved = 2
 }

@@ -168,11 +168,14 @@ public class NPC : Character
 		
 		foreach (Werewolf werewolf in Managers.Entity.Werewolves) 
 		{
-			curDist = Vector3.Distance(this.Position, werewolf.Position);
-			if (curDist < dist)
+			if (werewolf.gameObject.activeInHierarchy)
 			{
-				closest = werewolf;
-				dist = curDist;
+				curDist = Vector3.Distance(this.Position, werewolf.Position);
+				if (curDist < dist)
+				{
+					closest = werewolf;
+					dist = curDist;
+				}
 			}
 		}
 		
@@ -187,11 +190,14 @@ public class NPC : Character
 		
 		foreach (Villager villager in Managers.Entity.Villagers) 
 		{
-			curDist = Vector3.Distance(this.Position, villager.Position);
-			if (curDist < dist)
+			if (villager.gameObject.activeInHierarchy)
 			{
-				closest = villager;
-				dist = curDist;
+				curDist = Vector3.Distance(this.Position, villager.Position);
+				if (curDist < dist)
+				{
+					closest = villager;
+					dist = curDist;
+				}
 			}
 		}
 		
