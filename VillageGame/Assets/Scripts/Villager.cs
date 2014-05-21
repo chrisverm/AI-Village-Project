@@ -118,7 +118,10 @@ public class Villager : NPC
     {
         if (villagerAudio.transform.parent != transform)
         {
-            Destroy(villagerAudio);
+			if (villagerAudio.enabled)
+			{
+            	Destroy(villagerAudio);
+			}
         }
     }
 }
